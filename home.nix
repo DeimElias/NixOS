@@ -162,10 +162,29 @@
       edit_mode = "vi";
     };
     extraConfig = ''
-        if (which tmux | is-not-empty) and not ('TMUX' in $env) {
-          exec tmux new-session -A -s main
-      }
-    '';
+      		    if (which tmux | is-not-empty) and not ('TMUX' in $env) {
+      			    exec tmux new-session -A -s main
+      		    }
+      		  $env.PROJECTS = '/home/chimuelo/Projects/'
+      		  $env.config.keybindings ++= [{
+      		modifier: control
+      		keycode: char_y
+      		mode: vi_insert
+      		event: {
+      			send: HistoryHintWordComplete
+      		}
+      		  }
+      		  {
+      		modifier: control
+      		keycode: char_p
+      		mode: [vi_insert, vi_normal, emacs]
+      		event: {
+      			send: ExecHostCommand
+      			cmd: 'nu /home/chimuelo/.config/nushell/scrips/projects.nu'
+      		}
+      		  }
+      		  ]
+      	    '';
   };
 
   programs.direnv = {
@@ -252,6 +271,7 @@
   };
 
   home.file = {
+    ".config/nushell/scrips/projects.nu".source = ./nuscrips/projects.nu;
     ".config/winapps/winapps.conf".source = ./winapps/winapps.conf;
   };
   home.shell.enableNushellIntegration = true;
