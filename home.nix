@@ -143,10 +143,11 @@
     pkgs.hyprpicker
     zen.packages.${pkgs.system}.default
     pkgs.blueman
-    pkgs.remmina
     pkgs.dialog
     pkgs.libnotify
     pkgs.bat
+    pkgs.fzf
+    pkgs.gpu-screen-recorder
   ];
   programs.git = {
     enable = true;
