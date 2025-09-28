@@ -164,30 +164,38 @@
       edit_mode = "vi";
     };
     extraConfig = ''
-            		    if (which tmux | is-not-empty) and not ('TMUX' in $env) {
-            			    exec tmux new-session -A -s main
-            		    }
-            		  $env.PROJECTS = '/home/chimuelo/Projects/'
-      		  $env.EDITOR = 'nvim'
-            		  $env.config.keybindings ++= [{
-            		modifier: control
-            		keycode: char_y
-            		mode: vi_insert
-            		event: {
-            			send: HistoryHintWordComplete
-            		}
-            		  }
-            		  {
-            		modifier: control
-            		keycode: char_p
-            		mode: [vi_insert, vi_normal, emacs]
-            		event: {
-            			send: executehostcommand,
-            			cmd: 'nu /home/chimuelo/.config/nushell/scrips/projects.nu'
-            		}
-            		  }
-            		  ]
-            	    '';
+                  		    if (which tmux | is-not-empty) and not ('TMUX' in $env) {
+                  			    exec tmux new-session -A -s main
+                  		    }
+                  		  $env.PROJECTS = '/home/chimuelo/Projects/'
+            		  $env.EDITOR = 'nvim'
+                  		  $env.config.keybindings ++= [{
+                  		modifier: control
+                  		keycode: char_y
+                  		mode: vi_insert
+                  		event: {
+                  			send: HistoryHintWordComplete
+                  		}
+                  		  }
+                  		  {
+                  		modifier: control
+                  		keycode: char_p
+                  		mode: [vi_insert, vi_normal, emacs]
+                  		event: {
+                  			send: executehostcommand,
+                  			cmd: 'nu /home/chimuelo/.config/nushell/scrips/projects.nu'
+                  		}
+      			{
+                  		modifier: control
+                  		keycode: char_o
+                  		mode: [vi_insert, vi_normal, emacs]
+                  		event: {
+                  			send: executehostcommand,
+                  			cmd: 'nu /home/chimuelo/.config/nushell/scrips/projects.nu'
+                  		}
+                  		  }
+                  		  ]
+                  	    '';
   };
 
   programs.direnv = {
@@ -215,6 +223,17 @@
       clipboard-write = "allow";
       window-padding-x = "10";
       window-padding-y = "10";
+    };
+  };
+  services.udiskie = {
+    enable = true;
+    settings = {
+      # workaround for
+      # https://github.com/nix-community/home-manager/issues/632
+      program_options = {
+        # replace with your favorite file manager
+        file_manager = "${pkgs.nemo-with-extensions}/bin/nemo";
+      };
     };
   };
 

@@ -6,8 +6,6 @@ def 'main' [projects?: string] {
 	let project_path = $projects_dir ++ $selected_project
 	if (tmux has-session -t $'($project.project | to text -n)'| complete | $in.exit_code == 1) {
 		tmux new -s $'($project.project | to text -n)' -A -d -c $'($project_path)'
-		
 	}
 		tmux switch -t $'($project.project | to text -n)'
 	}
-
