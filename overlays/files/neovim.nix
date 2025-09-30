@@ -56,7 +56,7 @@ final: prev: {
           # All language dependencies
           nixd
           nixfmt-rfc-style
-          luajitPackages.lua-lsp
+          lua-language-server
           ruff
           pyright
 

@@ -7,7 +7,6 @@
 {
   home.username = "chimuelo";
   home.homeDirectory = "/home/chimuelo";
-
   wayland.windowManager.hyprland = {
     enable = true;
     package = null;

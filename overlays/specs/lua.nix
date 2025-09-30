@@ -36,6 +36,8 @@
   vim.opt.guicursor = 'n-v-c:block'
   -- Keep signcolumn on by default
   vim.opt.signcolumn = 'yes'
+  -- Set window border 
+  vim.opt.winborder = 'rounded'
 
   -- TIP: Disable arrow keys in normal and insert mode
   vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
