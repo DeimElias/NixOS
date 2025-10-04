@@ -7,6 +7,53 @@
 {
   home.username = "chimuelo";
   home.homeDirectory = "/home/chimuelo";
+  programs.caelestia = {
+    enable = true;
+    cli.enable = true;
+    systemd.enable = true;
+    settings = {
+      services.useFahrenheit = false;
+      dashboard.showOnHover = false;
+      bar.entries = [
+        {
+          id = "logo";
+          enabled = true;
+        }
+        {
+          id = "workspaces";
+          enabled = true;
+        }
+        {
+          id = "spacer";
+          enabled = true;
+        }
+        {
+          id = "activeWindow";
+          enabled = false;
+        }
+        {
+          id = "spacer";
+          enabled = true;
+        }
+        {
+          id = "tray";
+          enabled = false;
+        }
+        {
+          id = "clock";
+          enabled = true;
+        }
+        {
+          id = "statusIcons";
+          enabled = true;
+        }
+        {
+          id = "power";
+          enabled = true;
+        }
+      ];
+    };
+  };
   wayland.windowManager.hyprland = {
     enable = true;
     package = null;
@@ -227,6 +274,8 @@
       clipboard-write = "allow";
       window-padding-x = "10";
       window-padding-y = "10";
+      font-family = "FiraCode Nerd Font Mono";
+      background-opacity = 0.85;
     };
   };
   services.udiskie = {
@@ -241,59 +290,25 @@
     };
   };
 
-  programs.caelestia = {
-    enable = true;
-    cli.enable = true;
-    systemd.enable = true;
-    settings = {
-      services.useFahrenheit = false;
-      dashboard.showOnHover = false;
-      bar.entries = [
-        {
-          id = "logo";
-          enabled = true;
-        }
-        {
-          id = "workspaces";
-          enabled = true;
-        }
-        {
-          id = "spacer";
-          enabled = true;
-        }
-        {
-          id = "activeWindow";
-          enabled = false;
-        }
-        {
-          id = "spacer";
-          enabled = true;
-        }
-        {
-          id = "tray";
-          enabled = false;
-        }
-        {
-          id = "clock";
-          enabled = true;
-        }
-        {
-          id = "statusIcons";
-          enabled = true;
-        }
-        {
-          id = "power";
-          enabled = true;
-        }
-      ];
-    };
-  };
   programs.tmux = {
     baseIndex = 1;
     customPaneNavigationAndResize = true;
     enable = true;
     keyMode = "vi";
     terminal = "screen-256color";
+    plugins = with pkgs; [
+      {
+        plugin = tmuxPlugins.tokyonight-tmux;
+        extraConfig = ''
+                    set -g @theme_plugins 'datetime,battery'
+          set -g @theme_left_separator ''
+          set -g @theme_right_separator ''
+                    set -g @theme_transparent_status_bar 'true'
+                    set -g @theme_transparent_left_separator_inverse ''
+                    set -g @theme_transparent_right_separator_inverse ''
+        '';
+      }
+    ];
   };
 
   home.file = {

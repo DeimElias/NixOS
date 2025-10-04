@@ -55,9 +55,16 @@
               imports = [
                 ./home.nix
                 shell.homeManagerModules.default
+                (
+                  { ... }:
+                  {
+                    nixpkgs.overlays = obtainOverlays;
+                  }
+                )
+
               ];
             };
-            home-manager.extraSpecialArgs = { inherit zen; };
+            home-manager.extraSpecialArgs = { inherit zen pkgs; };
           }
 
           (

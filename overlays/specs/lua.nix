@@ -2,13 +2,17 @@
 # lua
 ''
   vim.g.mapleader = " " -- Need to set leader before lazy for correct keybindings
-  vim.opt.breakindent = true
 
   -- Save undo history
   vim.opt.undofile = true
-  vim.cmd.colorscheme('tokyonight-night')
+
+  -- colorscheme
+  require('tokyonight').setup({transparent = true})
+  vim.cmd.colorscheme('tokyonight')
+
   vim.o.relativenumber = true
   -- Enable break indent
+  vim.opt.breakindent = true
 
   -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
   vim.opt.ignorecase = true
@@ -75,6 +79,7 @@
   vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = 'Telescope Fuzzy find in Buffer' })
 
   vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+  vim.g.undotree_SetFocusWhenToggle = 1
   require("lazy").setup(
      {
           performance = {

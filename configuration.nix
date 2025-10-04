@@ -69,6 +69,7 @@
     variant = "";
   };
 
+  fonts.packages = [ pkgs.nerd-fonts.fira-code ];
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.chimuelo = {
     isNormalUser = true;
@@ -200,6 +201,7 @@
     enable = true;
     xwayland.enable = true; # Enable Xwayland for X applications
   };
+  programs.nm-applet.enable = true;
   programs.localsend.enable = true;
 
   # Open ports in the firewall.
