@@ -28,8 +28,11 @@
       ...
     }:
     let
+      findOverlays = file: (builtins.baseNameOf file) == "overlay.nix";
       obtainOverlays = (
-        map (overlay: import overlay) (nixpkgs.lib.filesystem.listFilesRecursive ./overlays/files)
+        map (overlay: import overlay) (
+          builtins.filter findOverlays (nixpkgs.lib.filesystem.listFilesRecursive ./.)
+        )
       );
       pkgsWithOverlays =
         system:

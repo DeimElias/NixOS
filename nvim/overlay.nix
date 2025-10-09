@@ -59,6 +59,9 @@ final: prev: {
           lua-language-server
           ruff
           pyright
+          jinja-lsp
+          tailwindcss-language-server
+          vscode-langservers-extracted
 
           # runtimeDeps
           ripgrep
@@ -87,21 +90,27 @@ final: prev: {
       vim-dadbod
       vim-dadbod-ui
       vim-dadbod-completion
+      neogit
+      gitsigns-nvim
+      diffview-nvim
       (tokyonight-nvim.overrideAttrs (original: {
         doCheck = false;
       }))
       nvim-lspconfig
       nvim-treesitter.withAllGrammars
     ];
-    luaRcContent = (
-      prev.lib.concatLines (
-        map (file: import file { inherit final; }) [
-          ../specs/lua.nix
-          ../specs/r-nvim.nix
-          ../specs/blink.nix
-          ../specs/tree.nix
-        ]
-      )
-    );
+    luaRcContent = (import ./lua.nix { inherit final; });
+  };
+  neovim-conf = final.stdenv.mkDerivation {
+    pname = "neovim-conf";
+    version = "1.0";
+    src = ./lua;
+    installPhase = ''
+      	mkdir -p $out/lua
+              cp -r ./* $out/lua
+      	'';
+    fixupPhase = ''
+      	  substituteInPlace $out/lua/plugins/lspconfig.lua --replace FIXME ${final.vimUtils.packDir final.neovim.passthru.packpathDirs}
+    '';
   };
 }
