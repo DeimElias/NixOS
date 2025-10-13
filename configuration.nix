@@ -9,7 +9,6 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./docker-compose.nix
-    ./nvim.nix
   ];
 
   services.udisks2.enable = true; # Bootloader
@@ -68,6 +67,10 @@
     layout = "us";
     variant = "";
   };
+  services.calibre-server = {
+    enable = true;
+    user = "Elias";
+  };
 
   fonts.packages = [ pkgs.nerd-fonts.fira-code ];
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -81,6 +84,10 @@
     ];
     shell = pkgs.nushell;
     packages = with pkgs; [ cups ];
+  };
+  xdg.mime.enable = true;
+  xdg.mime.defaultApplications = {
+    "application/pdf" = "org.kde.okular.desktop";
   };
 
   # Enable automatic login for the user.
@@ -115,9 +122,10 @@
     nushell
     helvum
     pavucontrol
-    neovim
     lprint
     wayfreerdp
+    neovim
+    kdePackages.okular
     #  wget
   ];
 
