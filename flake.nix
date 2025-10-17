@@ -35,22 +35,20 @@
         )
       );
       pkgsWithOverlays =
-        system:
-        import nixpkgs {
-          inherit system;
-          overlays = obtainOverlays;
-          allowUnfree = true;
+        { ... }:
+        {
+          nixpkgs.overlays = obtainOverlays;
         };
     in
     {
       nixosConfigurations.chimuelo = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
-        pkgs = pkgsWithOverlays system;
         specialArgs = {
           inherit inputs system;
         };
         modules = [
           home-manager.nixosModules.home-manager
+          pkgsWithOverlays
           ./configuration.nix
           {
             home-manager.useUserPackages = true;
@@ -58,16 +56,10 @@
               imports = [
                 ./home.nix
                 shell.homeManagerModules.default
-                (
-                  { ... }:
-                  {
-                    nixpkgs.overlays = obtainOverlays;
-                  }
-                )
-
+                pkgsWithOverlays
               ];
             };
-            home-manager.extraSpecialArgs = { inherit zen pkgs; };
+            home-manager.extraSpecialArgs = { inherit zen; };
           }
 
           (

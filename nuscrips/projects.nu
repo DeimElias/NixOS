@@ -1,6 +1,6 @@
 #!/usr/bin/env nu
 def 'main' [projects?: string] {
-	let projects_dir = ($projects | default $env.PROJECTS )
+	let projects_dir = ($projects| default { $env | get --optional PROJECTS | default /home/chimuelo/Projects/ })
 	let selected_project = (glob ($projects_dir + '*/*') | str replace $projects_dir '' | to text | fzf --tmux 80%,80%)
 	let project = $selected_project | parse '{language}/{project}'
 	let project_path = $projects_dir ++ $selected_project

@@ -210,11 +210,11 @@
       edit_mode = "vi";
     };
     extraConfig = ''
+            		  $env.PROJECTS = '/home/chimuelo/Projects/'
+      		  $env.EDITOR = 'nvim'
             		    if (which tmux | is-not-empty) and not ('TMUX' in $env) {
             			    exec tmux new-session -A -s main
             		    }
-            		  $env.PROJECTS = '/home/chimuelo/Projects/'
-      		  $env.EDITOR = 'nvim'
             	    '';
   };
 
