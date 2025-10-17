@@ -69,7 +69,6 @@
   };
   services.calibre-server = {
     enable = true;
-    user = "Elias";
   };
 
   fonts.packages = [ pkgs.nerd-fonts.fira-code ];
