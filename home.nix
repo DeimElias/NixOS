@@ -209,45 +209,13 @@
       show_banner = false;
       edit_mode = "vi";
     };
-    extraConfig =
-      let
-        conf = (builtins.readFile ./nuscrips/config.nu);
-        project = (builtins.readFile ./nuscrips/projects.nu);
-      in
-      ''
-              		    if (which tmux | is-not-empty) and not ('TMUX' in $env) {
-              			    exec tmux new-session -A -s main
-              		    }
-              		  $env.PROJECTS = '/home/chimuelo/Projects/'
-        		  $env.EDITOR = 'nvim'
-              		  $env.config.keybindings ++= [{
-              		modifier: control
-              		keycode: char_y
-              		mode: vi_insert
-              		event: {
-              			send: HistoryHintWordComplete
-              		}
-              		  }
-              		  {
-              		modifier: control
-              		keycode: char_p
-              		mode: [vi_insert, vi_normal, emacs]
-              		event: {
-              			send: executehostcommand,
-              			cmd: 'nu ${pkgs.writeText "project.nu" project}'
-              		}
-              		  }
-              		  {
-              		modifier: control
-              		keycode: char_o
-              		mode: [vi_insert, vi_normal, emacs]
-              		event: {
-              			send: executehostcommand,
-              			cmd: 'nu ${pkgs.writeText "config.nu" conf}'
-              		}
-              		  }
-              		  ]
-              	    '';
+    extraConfig = ''
+            		    if (which tmux | is-not-empty) and not ('TMUX' in $env) {
+            			    exec tmux new-session -A -s main
+            		    }
+            		  $env.PROJECTS = '/home/chimuelo/Projects/'
+      		  $env.EDITOR = 'nvim'
+            	    '';
   };
 
   programs.carapace = {
@@ -290,6 +258,15 @@
     enable = true;
     keyMode = "vi";
     terminal = "screen-256color";
+    extraConfig =
+      let
+        conf = (builtins.readFile ./nuscrips/config.nu);
+        project = (builtins.readFile ./nuscrips/projects.nu);
+      in
+      ''
+        bind p run-shell "nu ${pkgs.writeText "project.nu" project}"
+        bind o run-shell "nu ${pkgs.writeText "config.nu" conf}"
+      '';
     plugins = with pkgs; [
       {
         plugin = tmuxPlugins.tokyonight-tmux;
