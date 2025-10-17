@@ -92,6 +92,11 @@ final: prev: {
       vim-dadbod-completion
       neogit
       gitsigns-nvim
+      lualine-nvim
+      nvim-web-devicons
+      noice-nvim
+      nui-nvim
+      nvim-notify
       diffview-nvim
       (tokyonight-nvim.overrideAttrs (original: {
         doCheck = false;

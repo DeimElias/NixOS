@@ -270,7 +270,7 @@
       clipboard-read = "allow";
       clipboard-write = "allow";
       window-padding-x = "10";
-      window-padding-y = "10";
+      window-padding-y = "7";
       font-family = "FiraCode Nerd Font Mono";
       background-opacity = 0.85;
     };

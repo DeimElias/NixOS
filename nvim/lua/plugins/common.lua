@@ -116,6 +116,7 @@ return {
 				changedelete = { text = "▎" },
 			},
 		},
+		event = "VimEnter",
 		keys = {
 			{
 				']c',
