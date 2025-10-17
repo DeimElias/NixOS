@@ -18,7 +18,8 @@ final: prev: {
   };
   rEnv = prev.radianWrapper.override {
     wrapR = true;
-    recommendedPackages = prev.radianWrapper.recommendedPackages ++ (with final.rPackages; [ nvimcom ]);
+    recommendedPackages =
+      prev.radianWrapper.recommendedPackages ++ (with final.rPackages; [ tidyverse ]);
   };
   vimPlugins = prev.vimPlugins // {
     r-nvim = final.vimUtils.buildVimPlugin {
@@ -30,7 +31,10 @@ final: prev: {
         rev = "main";
         sha256 = "sha256-mb8HCaMasPUP9JZUkH1sPrtdbhM2HMUkJEKDsRt6wTs=";
       };
-      runtimeDeps = [ final.rEnv ];
+      runtimeDeps = [
+        final.rEnv
+        final.rPackages.nvimcom
+      ];
     };
     cmp-r = final.vimUtils.buildVimPlugin {
       pname = "cmp-r";
