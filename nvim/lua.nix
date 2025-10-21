@@ -81,7 +81,8 @@
   vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = 'Telescope Fuzzy find in Buffer' })
 
   vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-  vim.g.undotree_SetFocusWhenToggle = 1
+
+  --- Add ./Lua directory to VimRintimePath so LazyVim can read lua files
   vim.opt.runtimepath:append("${final.neovim-conf}")
 
   require("lazy").setup(
