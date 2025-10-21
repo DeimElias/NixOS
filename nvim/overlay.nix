@@ -62,6 +62,7 @@ final: prev: {
           nixfmt-rfc-style
           lua-language-server
           ruff
+          sqruff
           pyright
           jinja-lsp
           tailwindcss-language-server

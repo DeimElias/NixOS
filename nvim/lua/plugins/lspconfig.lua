@@ -85,6 +85,7 @@ return {
 				j2 = 'jinja',
 			},
 		}
+		vim.lsp.enable('sqruff')
 		vim.lsp.enable('jinja_lsp')
 		vim.lsp.enable("html")
 		vim.lsp.enable("nushell")
