@@ -140,6 +140,11 @@
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
+    publish.enable = true;
+    publish.addresses = true;
+    publish.workstation = true;
+    publish.userServices = true;
+    ipv4 = true;
   };
 
   services.printing = {
