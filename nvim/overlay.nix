@@ -71,6 +71,7 @@ final: prev: {
           # runtimeDeps
           ripgrep
           sqlcmd
+          sqlite
         ];
       }
     );

@@ -7,7 +7,7 @@ return {
 	},
 	config = function()
 		vim.api.nvim_create_autocmd('FileType', {
-			pattern = { "python", "nix", "r", "quarto", "lua", "markdown", "html", "nu" },
+			pattern = { "python", "nix", "r", "quarto", "lua", "markdown", "html", "nu", "sql" },
 			callback = function() vim.treesitter.start() end,
 		})
 	end
