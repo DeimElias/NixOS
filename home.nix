@@ -77,9 +77,7 @@
       binds = {
         disable_keybind_grabbing = true;
       };
-      exec = "hyprctl dispacth submap global";
       env = "SDL_VIDEODRIVER,wayland";
-      submap = "global";
       "$mod" = "SUPER";
       monitor = [
         "eDP-1, preferred, auto, 1"
