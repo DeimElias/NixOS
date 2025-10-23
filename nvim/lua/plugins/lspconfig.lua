@@ -88,6 +88,7 @@ return {
 		vim.lsp.enable('sqruff')
 		vim.lsp.enable('jinja_lsp')
 		vim.lsp.enable("html")
+		vim.lsp.enable("ccls")
 		vim.lsp.enable("nushell")
 		vim.lsp.enable("tailwindcss")
 		vim.lsp.enable("pyright")

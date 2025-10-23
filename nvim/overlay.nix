@@ -65,6 +65,7 @@ final: prev: {
           sqruff
           pyright
           jinja-lsp
+          ccls
           tailwindcss-language-server
           vscode-langservers-extracted
 
