@@ -42,7 +42,7 @@ return {
 					})
 				end,
 			},
-			pdfviewer = "",
+			pdfviewer = "ebook-viewer",
 		},
 		config = function(_, opts)
 			vim.g.rout_follow_colorscheme = true
