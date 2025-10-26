@@ -140,13 +140,11 @@
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
-    publish.enable = true;
-    publish.addresses = true;
-    publish.workstation = true;
-    publish.userServices = true;
-    ipv4 = true;
+    publish = {
+      enable = true;
+      userServices = true;
+    };
   };
-
   services.printing = {
     enable = true;
     drivers = with pkgs; [
@@ -154,6 +152,11 @@
       cups-browsed
       cups-zj
     ];
+    listenAddresses = [ "*:631" ];
+    allowFrom = [ "all" ];
+    browsing = true;
+    defaultShared = true;
+    openFirewall = true;
   };
   services.samba.enable = true;
 
