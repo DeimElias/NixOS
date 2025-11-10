@@ -228,6 +228,15 @@
     enable = true;
     xwayland.enable = true; # Enable Xwayland for X applications
   };
+  # screen recorder
+  programs.gpu-screen-recorder.enable = true;
+  # Explorer GUI
+  programs.thunar.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
+  };
   programs.nm-applet.enable = true;
   programs.localsend.enable = true;
 
