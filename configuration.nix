@@ -2,7 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  stable,
+  ...
+}:
 
 {
   imports = [
@@ -67,9 +73,6 @@
     layout = "us";
     variant = "";
   };
-  services.calibre-server = {
-    enable = true;
-  };
 
   fonts.packages = [ pkgs.nerd-fonts.fira-code ];
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -113,20 +116,28 @@
   services.upower.enable = true;
 
   # Allow unfree packages
-  #nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfree = true;
+  hardware.graphics = {
+    enable = true;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    nushell
-    helvum
-    pavucontrol
-    lprint
-    wayfreerdp
-    neovim
-    kdePackages.okular
-    #  wget
-  ];
+  environment.systemPackages =
+    with pkgs;
+    [
+      nushell
+      helvum
+      pavucontrol
+      lprint
+      wayfreerdp
+      neovim
+      kdePackages.okular
+      usbutils
+      inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+      #  wget
+    ]
+    ++ [ stable.calibre ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -143,6 +154,7 @@
     publish = {
       enable = true;
       userServices = true;
+      addresses = true;
     };
   };
   services.printing = {
@@ -223,7 +235,8 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
+  networking.firewall.allowedUDPPorts = [ 5353 ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

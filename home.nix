@@ -77,7 +77,11 @@
       binds = {
         disable_keybind_grabbing = true;
       };
-      env = "SDL_VIDEODRIVER,wayland";
+      env = [
+        "SDL_VIDEODRIVER,wayland"
+        "HYPRCURSOR_THEME,rose-pine-hyprcursor"
+        "HYPRCURSOR_SIZE,35"
+      ];
       "$mod" = "SUPER";
       monitor = [
         "eDP-1, preferred, auto, 1"
@@ -196,8 +200,10 @@
   ];
   programs.git = {
     enable = true;
-    userEmail = "deimelias@gmail.com";
-    userName = "DeimElias";
+    settings = {
+      user.email = "deimelias@gmail.com";
+      user.name = "DeimElias";
+    };
   };
 
   programs.nushell = {
@@ -230,7 +236,7 @@
   programs.ghostty = {
     enable = true;
     settings = {
-      theme = "tokyonight-storm";
+      theme = "TokyoNight Storm";
       font-size = 15;
       gtk-tabs-location = "hidden";
       clipboard-read = "allow";

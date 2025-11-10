@@ -2,6 +2,7 @@
   description = "My Nixos configuration";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgss.url = "github:NixOS/nixpkgs/nixos-25.05";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     zen.url = "github:youwen5/zen-browser-flake";
@@ -16,6 +17,10 @@
     cli = {
       url = "github:caelestia-dots/cli";
     };
+    rose-pine-hyprcursor = {
+      url = "github:ndom91/rose-pine-hyprcursor";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     inputs@{
@@ -25,9 +30,11 @@
       zen,
       winapps,
       shell,
+      nixpkgss,
       ...
     }:
     let
+      system = "x86_64-linux";
       findOverlays = file: (builtins.baseNameOf file) == "overlay.nix";
       obtainOverlays = (
         map (overlay: import overlay) (
@@ -39,12 +46,13 @@
         {
           nixpkgs.overlays = obtainOverlays;
         };
+      stable = import nixpkgss { inherit system; };
     in
     {
       nixosConfigurations.chimuelo = nixpkgs.lib.nixosSystem rec {
-        system = "x86_64-linux";
+        inherit system;
         specialArgs = {
-          inherit inputs system;
+          inherit stable system inputs;
         };
         modules = [
           home-manager.nixosModules.home-manager
@@ -59,7 +67,7 @@
                 pkgsWithOverlays
               ];
             };
-            home-manager.extraSpecialArgs = { inherit zen; };
+            home-manager.extraSpecialArgs = { inherit zen stable; };
           }
 
           (

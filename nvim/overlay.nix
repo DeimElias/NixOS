@@ -57,7 +57,7 @@ final: prev: {
       original
       // {
         passthru.runtimeDeps = with final; [
-          # All language dependencies
+          # Language server
           nixd
           nixfmt-rfc-style
           lua-language-server
