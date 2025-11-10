@@ -154,6 +154,7 @@
         "$mod, S, exec, localsend_app"
         "$mod, Space, exec, caelestia toggle specialws"
         "$mod, F, togglefloating"
+        "$mod, code:60, pin"
         "$mod, M, fullscreen"
         "$mod, T, movecurrentworkspacetomonitor, +1"
 
@@ -214,12 +215,21 @@
       edit_mode = "vi";
     };
     extraConfig = ''
-            		  $env.PROJECTS = '/home/chimuelo/Projects/'
-      		  $env.EDITOR = 'nvim'
-            		    if (which tmux | is-not-empty) and not ('TMUX' in $env) {
-            			    exec tmux new-session -A -s main
-            		    }
-            	    '';
+            		$env.PROJECTS = '/home/chimuelo/Projects/'
+            		$env.EDITOR = 'nvim'
+            		if (which tmux | is-not-empty) and not ('TMUX' in $env) {
+            			exec tmux new-session -A -s main
+            		}
+            	$env.config.keybindings ++= [{
+            modifier: control
+            			  keycode: char_y
+            			  mode: vi_insert
+            			  event: {
+            send: HistoryHintWordComplete
+            			  }
+            	}
+      		]
+            	'';
   };
 
   programs.carapace = {
