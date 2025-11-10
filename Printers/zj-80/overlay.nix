@@ -13,6 +13,10 @@ final: prev: {
       final.pkg-config
     ];
     buildInputs = [ final.cups ];
+    patchPhase = ''
+      substituteInPlace CMakeLists.txt \
+      --replace-fail "cmake_minimum_required ( VERSION 3.0 )" "cmake_minimum_required ( VERSION 3.10 )"
+    '';
     installPhase = ''
       install -D ppd/zj80.ppd $out/share/cups/model/zjiang/zj80.ppd
       install -D ppd/zj58.ppd $out/share/cups/model/zjiang/zj58.ppd
