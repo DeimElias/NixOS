@@ -69,6 +69,9 @@ final: prev: {
           tailwindcss-language-server
           vscode-langservers-extracted
 
+          # Debug adapters
+          gdb
+
           # runtimeDeps
           ripgrep
           sqlcmd
@@ -110,6 +113,8 @@ final: prev: {
       }))
       nvim-lspconfig
       nvim-treesitter.withAllGrammars
+      nvim-dap
+      nvim-dap-ui
     ];
     luaRcContent = (import ./lua.nix { inherit final; });
   };
