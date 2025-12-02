@@ -109,6 +109,17 @@
         "$mod, mouse:273, resizewindow"
         "$mod ALT, mouse:272, resizewindow"
       ];
+      binde =
+        let
+          script = (builtins.readFile ./nuscrips/zoom.nu);
+
+          zoom = pkgs.writeText "zoom.nu" script;
+        in
+        [
+          "$mod, mouse:274, exec, hyprctl keyword cursor:zoom_factor 1.0"
+          "$mod, code:20, exec, nu ${zoom} -0.3"
+          "$mod, code:21, exec, nu ${zoom} 0.3"
+        ];
       bindle = [
         ", XF86AudioRaiseVolume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0; wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
         ", XF86AudioLowerVolume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0; wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
@@ -139,8 +150,6 @@
         "$mod, mouse:275, global, caelestia:LaunherInterrupt"
         "$mod, mouse:276, global, caelestia:LaunherInterrupt"
         "$mod, mouse:277, global, caelestia:LaunherInterrupt"
-        "$mod, mouse_up, global, caelestia:LaunherInterrupt"
-        "$mod, mouse_down, global, caelestia:LaunherInterrupt"
       ];
       bindr = "SUPER, D, global, caelestia:launcher";
       bind = [
