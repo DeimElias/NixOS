@@ -159,7 +159,7 @@
         "$mod+SHIFT, C, forcekillactive,"
         "$mod, B, exec, blueman-manager"
         "$mod, R, exec, sdl3-freerdp /u:caja /p:1234 /v:10.238.103.31 /cert:ignore /dynamic-resolution +clipboard /t:Windows +unmap-buttons"
-        "$mod, E, exec, sdl3-freerdp /u:MyWindowsUser /p:MyWindowsPassword /v:127.0.0.1 /cert:ignore /dynamic-resolution +clipboard /t:Windows +unmap-buttons /printer"
+        "$mod, E, exec, sdl3-freerdp /u:MyWindowsUser /p:MyWindowsPassword /v:127.0.0.1 /cert:ignore /dynamic-resolution +clipboard /t:Windows +drives /printer"
         "$mod, S, exec, localsend_app"
         "$mod, Space, exec, caelestia toggle specialws"
         "$mod, F, togglefloating"
@@ -200,13 +200,14 @@
 
   home.packages = [
     pkgs.hyprpicker
-    zen.packages.${pkgs.system}.default
+    zen.packages.${pkgs.stdenv.hostPlatform.system}.default
     pkgs.blueman
     pkgs.dialog
     pkgs.libnotify
     pkgs.bat
     pkgs.fzf
-    pkgs.gpu-screen-recorder
+    pkgs.btop
+    pkgs.kdePackages.dolphin
   ];
   programs.git = {
     enable = true;
@@ -270,7 +271,7 @@
     enable = true;
     settings = {
       program_options = {
-        file_manager = "${pkgs.nemo-with-extensions}/bin/nemo";
+        file_manager = "${pkgs.kdePackages.dolphin}/bin/dolphin";
       };
     };
   };
@@ -285,10 +286,13 @@
       let
         conf = (builtins.readFile ./nuscrips/config.nu);
         project = (builtins.readFile ./nuscrips/projects.nu);
+        fbtop = (builtins.readFile ./nuscrips/fbtop.nu);
       in
       ''
-        bind p run-shell "nu ${pkgs.writeText "project.nu" project}"
-        bind o run-shell "nu ${pkgs.writeText "config.nu" conf}"
+                bind p run-shell "nu ${pkgs.writeText "project.nu" project}"
+                bind o run-shell "nu ${pkgs.writeText "config.nu" conf}"
+                bind i run-shell "nu ${pkgs.writeText "fbtop.nu" fbtop}"
+        		set-option -g status-position top
       '';
     plugins = with pkgs; [
       {

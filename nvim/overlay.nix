@@ -19,7 +19,12 @@ final: prev: {
   rEnv = prev.radianWrapper.override {
     wrapR = true;
     recommendedPackages =
-      prev.radianWrapper.recommendedPackages ++ (with final.rPackages; [ tidyverse ]);
+      prev.radianWrapper.recommendedPackages
+      ++ (with final.rPackages; [
+        tidyverse
+        nvimcom
+        languageserver
+      ]);
   };
   vimPlugins = prev.vimPlugins // {
     r-nvim = final.vimUtils.buildVimPlugin {
@@ -33,7 +38,6 @@ final: prev: {
       };
       runtimeDeps = [
         final.rEnv
-        final.rPackages.nvimcom
       ];
     };
     cmp-r = final.vimUtils.buildVimPlugin {
@@ -56,27 +60,30 @@ final: prev: {
       original:
       original
       // {
-        passthru.runtimeDeps = with final; [
-          # Language server
-          nixd
-          nixfmt-rfc-style
-          lua-language-server
-          ruff
-          sqruff
-          pyright
-          jinja-lsp
-          ccls
-          tailwindcss-language-server
-          vscode-langservers-extracted
+        passthru.runtimeDeps =
+          with final;
+          [
+            # Language server
+            nixd
+            nixfmt-rfc-style
+            lua-language-server
+            ruff
+            sqruff
+            pyright
+            jinja-lsp
+            ccls
+            tailwindcss-language-server
+            vscode-langservers-extracted
 
-          # Debug adapters
-          gdb
+            # Debug adapters
+            gdb
 
-          # runtimeDeps
-          ripgrep
-          sqlcmd
-          sqlite
-        ];
+            # runtimeDeps
+            ripgrep
+            sqlcmd
+            sqlite
+          ]
+          ++ final.lib.optionals (original.passthru ? runtimeDeps) original.passthru.runtimeDeps;
       }
     );
 

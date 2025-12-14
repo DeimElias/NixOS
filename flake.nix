@@ -2,7 +2,7 @@
   description = "My Nixos configuration";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgss.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgss.url = "github:NixOS/nixpkgs/nixos-25.11";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     zen.url = "github:youwen5/zen-browser-flake";
@@ -13,9 +13,11 @@
     };
     shell = {
       url = "github:caelestia-dots/shell";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     cli = {
       url = "github:caelestia-dots/cli";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     rose-pine-hyprcursor = {
       url = "github:ndom91/rose-pine-hyprcursor";

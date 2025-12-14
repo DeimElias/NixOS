@@ -67,7 +67,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "freerdp";
-  version = "3.17.2";
+  version = "3.19.1";
 
   src = fetchFromGitHub {
     owner = "FreeRDP";

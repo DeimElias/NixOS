@@ -147,7 +147,7 @@
     kdePackages.okular
     usbutils
     mpv
-    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+    inputs.rose-pine-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default
     google-drive-ocamlfuse
     stable.calibre
     #  wget
@@ -176,7 +176,7 @@
     drivers = with pkgs; [
       cups-filters
       cups-browsed
-      cups-zj
+      cups-zj-58
     ];
     listenAddresses = [ "*:631" ];
     allowFrom = [ "all" ];
@@ -215,12 +215,13 @@
   };
   # screen recorder
   programs.gpu-screen-recorder.enable = true;
-  # Explorer GUI
-  programs.thunar.enable = true;
 
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-hyprland
+      kdePackages.xdg-desktop-portal-kde
+    ];
   };
   programs.nm-applet.enable = true;
   programs.localsend.enable = true;
