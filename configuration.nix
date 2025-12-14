@@ -121,24 +121,37 @@
     enable = true;
   };
 
+  systemd.user.services.google-drive-ocamlfuse = {
+    enable = true;
+    after = [ "network.target" ];
+    wantedBy = [ "default.target" ];
+    description = "Google Drive mount service";
+    serviceConfig = {
+      Type = "forking";
+      ExecStart = "${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse -label default /home/chimuelo/Drive";
+      ExecStop = "${pkgs.fuse}/bin/fusermount -u /home/chimuelo/Drive";
+      Restart = "always";
+    };
+
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages =
-    with pkgs;
-    [
-      nushell
-      helvum
-      pavucontrol
-      lprint
-      wayfreerdp
-      neovim
-      kdePackages.okular
-      usbutils
-      mpv
-      inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
-      #  wget
-    ]
-    ++ [ stable.calibre ];
+  environment.systemPackages = with pkgs; [
+    nushell
+    helvum
+    pavucontrol
+    lprint
+    wayfreerdp
+    neovim
+    kdePackages.okular
+    usbutils
+    mpv
+    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+    google-drive-ocamlfuse
+    stable.calibre
+    #  wget
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
