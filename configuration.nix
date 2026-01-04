@@ -144,6 +144,8 @@
     lprint
     wayfreerdp
     neovim
+    discord
+    qalculate-gtk
     kdePackages.okular
     usbutils
     mpv
