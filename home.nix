@@ -2,59 +2,60 @@
   config,
   pkgs,
   zen,
+  shell,
   ...
 }:
 {
   home.username = "chimuelo";
   home.homeDirectory = "/home/chimuelo";
-  programs.caelestia = {
-    enable = true;
-    cli.enable = true;
-    systemd.enable = true;
-    settings = {
-      services.useFahrenheit = false;
-      dashboard.showOnHover = false;
-      notifs.actionOnClick = true;
-      bar.entries = [
-        {
-          id = "logo";
-          enabled = true;
-        }
-        {
-          id = "workspaces";
-          enabled = true;
-        }
-        {
-          id = "spacer";
-          enabled = true;
-        }
-        {
-          id = "activeWindow";
-          enabled = false;
-        }
-        {
-          id = "spacer";
-          enabled = true;
-        }
-        {
-          id = "tray";
-          enabled = false;
-        }
-        {
-          id = "clock";
-          enabled = true;
-        }
-        {
-          id = "statusIcons";
-          enabled = true;
-        }
-        {
-          id = "power";
-          enabled = true;
-        }
-      ];
-    };
-  };
+  # programs.caelestia = {
+  #   enable = true;
+  #   package =     cli.enable = true;
+  #   systemd.enable = true;
+  #   settings = {
+  #     services.useFahrenheit = false;
+  #     dashboard.showOnHover = false;
+  #     notifs.actionOnClick = true;
+  #     bar.entries = [
+  #       {
+  #         id = "logo";
+  #         enabled = true;
+  #       }
+  #       {
+  #         id = "workspaces";
+  #         enabled = true;
+  #       }
+  #       {
+  #         id = "spacer";
+  #         enabled = true;
+  #       }
+  #       {
+  #         id = "activeWindow";
+  #         enabled = false;
+  #       }
+  #       {
+  #         id = "spacer";
+  #         enabled = true;
+  #       }
+  #       {
+  #         id = "tray";
+  #         enabled = false;
+  #       }
+  #       {
+  #         id = "clock";
+  #         enabled = true;
+  #       }
+  #       {
+  #         id = "statusIcons";
+  #         enabled = true;
+  #       }
+  #       {
+  #         id = "power";
+  #         enabled = true;
+  #       }
+  #     ];
+  #   };
+  # };
   wayland.windowManager.hyprland = {
     enable = true;
     package = null;
@@ -68,6 +69,22 @@
         warp_on_change_workspace = 1;
         hide_on_key_press = true;
       };
+      exec-once =
+        let
+          caelestia = shell.packages.${pkgs.stdenv.hostPlatform.system}.caelestia-shell.override {
+
+            app2unit = pkgs.app2unit;
+            material-symbols = pkgs.material-symbols.overrideAttrs (attrs: {
+              postInstall = ''
+                ln -s "$out/share/fonts/TTF/MaterialSymbolsRounded.ttf" "$out/share/fonts/TTF/MaterialSymbolsRounded[FILL,GRAD,opsz,wght].ttf"
+                ln -s "$out/share/fonts/TTF/MaterialSymbolsOutlined.ttf" "$out/share/fonts/TTF/MaterialSymbolsOutlined[FILL,GRAD,opsz,wght].ttf"
+                ln -s "$out/share/fonts/TTF/MaterialSymbolsSharp.ttf" "$out/share/fonts/TTF/MaterialSymbolsSharp[FILL,GRAD,opsz,wght].ttf"
+              '';
+            });
+          };
+        in
+        "${caelestia}/bin/caelestia-shell";
+
       decoration = {
         rounding = 10;
       };
@@ -158,8 +175,8 @@
         "$mod, C, killactive,"
         "$mod+SHIFT, C, forcekillactive,"
         "$mod, B, exec, blueman-manager"
-        "$mod, R, exec, sdl3-freerdp /u:caja /p:1234 /v:10.238.103.31 /cert:ignore /dynamic-resolution +clipboard /t:Windows +unmap-buttons"
-        "$mod, E, exec, sdl3-freerdp /u:MyWindowsUser /p:MyWindowsPassword /v:127.0.0.1 /cert:ignore /dynamic-resolution +clipboard /t:Windows +drives /printer"
+        "$mod, R, exec, sdl-freerdp /u:caja /p:1234 /v:10.238.0.25 /cert:ignore /dynamic-resolution +clipboard /t:Windows +unmap-buttons"
+        "$mod, E, exec, sdl-freerdp /u:MyWindowsUser /p:MyWindowsPassword /v:127.0.0.1 /cert:ignore /dynamic-resolution +clipboard /t:Windows +drives /printer"
         "$mod, S, exec, localsend_app"
         "$mod, Space, exec, caelestia toggle specialws"
         "$mod, F, togglefloating"
@@ -257,14 +274,14 @@
     enable = true;
     settings = {
       theme = "TokyoNight Storm";
-      font-size = 15;
+      font-size = 13;
       gtk-tabs-location = "hidden";
       clipboard-read = "allow";
       clipboard-write = "allow";
       window-padding-x = "10";
       window-padding-y = "12,0";
       font-family = "FiraCode Nerd Font Mono";
-      background-opacity = 0.85;
+      background-opacity = 0.78;
     };
   };
   services.udiskie = {
@@ -289,10 +306,20 @@
         fbtop = (builtins.readFile ./nuscrips/fbtop.nu);
       in
       ''
-                bind p run-shell "nu ${pkgs.writeText "project.nu" project}"
-                bind o run-shell "nu ${pkgs.writeText "config.nu" conf}"
-                bind i run-shell "nu ${pkgs.writeText "fbtop.nu" fbtop}"
-        		set-option -g status-position top
+                        bind p run-shell "nu ${pkgs.writeText "project.nu" project}"
+                        bind o run-shell "nu ${pkgs.writeText "config.nu" conf}"
+                        bind i run-shell "nu ${pkgs.writeText "fbtop.nu" fbtop}"
+                		set-option -g status-position top
+        				bind-key -n M-1 select-window -t 1
+        				bind-key -n M-2 select-window -t 2
+        				bind-key -n M-3 select-window -t 3
+        				bind-key -n M-4 select-window -t 4
+        				bind-key -n M-5 select-window -t 5
+        				bind-key -n M-6 select-window -t 6
+        				bind-key -n M-7 select-window -t 7
+        				bind-key -n M-8 select-window -t 8
+        				bind-key -n M-9 select-window -t 9
+        				bind-key -n M-0 select-window -t 0
       '';
     plugins = with pkgs; [
       {

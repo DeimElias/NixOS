@@ -11,6 +11,7 @@
   vim.cmd.colorscheme('tokyonight')
 
   vim.o.relativenumber = true
+  vim.o.number = true
   -- Enable break indent
   vim.opt.breakindent = true
 
@@ -21,8 +22,12 @@
   -- Move Line
   vim.keymap.set('n', '<C-k>', '<cmd>mo .-2<CR>')
   vim.keymap.set('n', '<C-j>', '<cmd>mo .+1<CR>')
-  vim.keymap.set('v', '<C-k>', ":'< mo .-2<CR>gv")
-  vim.keymap.set('v', '<C-j>', ":'<,'> mo '>+1<CR>gv")
+  vim.keymap.set('v', '<C-k>', ":'< mo .-2<CR>gv=gv")
+  vim.keymap.set('v', '<C-j>', ":'<,'> mo '>+1<CR>gv=gv")
+
+  -- Indent lines
+  vim.keymap.set('v', '>', ">gv", {noremap = true})
+  vim.keymap.set('v', '<', "<gv", {noremap = true})
 
   -- Decrease update time
   vim.opt.updatetime = 250
@@ -75,12 +80,21 @@
 
   local builtin = require('telescope.builtin')
   vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
-  vim.keymap.set('n', '<leader>fr', builtin.live_grep, { desc = 'Telescope live grep' })
+  vim.keymap.set('n', '<leader>fs', builtin.grep_string, { desc = 'Telescope grep inner word' })
+  vim.keymap.set('v', '<leader>fs', builtin.grep_string, { desc = 'Telescope grep selected' })
   vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = 'Telescope buffers' })
   vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Telescope diagnostics' })
+  vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
   vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = 'Telescope Fuzzy find in Buffer' })
 
   vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+  vim.keymap.set({'n', 'v'}, '<leader>y', '"+y', {desc = 'Copy to system clipboard'})
+  vim.keymap.set({'n', 'v'}, '<leader>p', '"+p', {desc = 'Paste from system clipboard'})
+  vim.keymap.set({'n', 'v'}, ':', 'q:i', {noremap = true})
+  vim.keymap.set('n', '<C-L>', '<cmd>Ex<CR>', {desc = 'Open Netrw'})
+  vim.keymap.set('n', '<leader>l', '<cmd>let @+ = @%<CR>', {desc = 'Copy path to cipboard'})
+
 
   --- Add ./Lua directory to VimRintimePath so LazyVim can read lua files
   vim.opt.runtimepath:append("${final.neovim-conf}")

@@ -13,13 +13,15 @@
 {
   imports = [
     # Include the results of the hardware scan.
-    ./hardware-configuration.nix
     ./docker-compose.nix
   ];
 
   services.udisks2.enable = true; # Bootloader
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  #Disable ESC and CTRL, map CTRL to capslock and CTRL+[ to ESC
   services.keyd = {
     enable = true;
     keyboards = {
@@ -40,15 +42,18 @@
     };
   };
 
-  # Use latest kernel.
+  i18n.supportedLocales = [ "all" ];
   services.displayManager.ly = {
     enable = true;
   };
+
+  # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.initrd.luks.devices."luks-528734e7-567f-4bbd-8c43-647797ff4582".device =
     "/dev/disk/by-uuid/528734e7-567f-4bbd-8c43-647797ff4582";
-  networking.hostName = "nixos"; # Define your hostname.
+  # Define your hostname.
+  networking.hostName = "chimuelo"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -74,7 +79,9 @@
     variant = "";
   };
 
+  #fonts
   fonts.packages = [ pkgs.nerd-fonts.fira-code ];
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.chimuelo = {
     isNormalUser = true;
@@ -83,15 +90,10 @@
       "networkmanager"
       "wheel"
       "docker"
+      "lpadmin"
     ];
     shell = pkgs.nushell;
-    packages = with pkgs; [ cups ];
   };
-  xdg.mime.enable = true;
-  xdg.mime.defaultApplications = {
-    "application/pdf" = "org.kde.okular.desktop";
-  };
-
   # Enable automatic login for the user.
   services.getty.autologinUser = "chimuelo";
   services.logind.settings.Login = {
@@ -99,7 +101,14 @@
     HandleLidSwitchExternalPower = "lock";
     HandleLidSwitchDocked = "ignore";
   };
-  # Power related config
+
+  #Set default application for some type of files
+  xdg.mime.enable = true;
+  xdg.mime.defaultApplications = {
+    "application/pdf" = "org.kde.okular.desktop";
+  };
+
+  # Power related config for laptops
   services.auto-cpufreq.enable = true;
   services.auto-cpufreq.settings = {
     battery = {
@@ -112,7 +121,7 @@
     };
   };
 
-  # Battery related config
+  # Battery related config requiered by Caelestia
   services.upower.enable = true;
 
   # Allow unfree packages
@@ -121,6 +130,7 @@
     enable = true;
   };
 
+  # GoogleDrive sync
   systemd.user.services.google-drive-ocamlfuse = {
     enable = true;
     after = [ "network.target" ];
@@ -128,41 +138,47 @@
     description = "Google Drive mount service";
     serviceConfig = {
       Type = "forking";
-      ExecStart = "${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse -label default /home/chimuelo/Drive";
-      ExecStop = "${pkgs.fuse}/bin/fusermount -u /home/chimuelo/Drive";
+      ExecStart = "${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse -label default /home/chimuelo/GoogleDrive";
+      ExecStop = "${pkgs.fuse}/bin/fusermount -u /home/chimuelo/GoogleDrive";
       Restart = "always";
     };
 
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     nushell
-    helvum
+    crosspipe
     pavucontrol
-    lprint
-    wayfreerdp
+    (freerdp.override { withWaylandSupport = true; })
     neovim
     discord
     qalculate-gtk
     kdePackages.okular
     usbutils
     mpv
+    impala
     inputs.rose-pine-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default
     google-drive-ocamlfuse
     stable.calibre
-    #  wget
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
   # Enables printing options
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [
+      cups-filters
+      cups-browsed
+      cups-zj-58
+      epson-tm-t88vi
+      epson-escpr2
+    ];
+    allowFrom = [ "all" ];
+    browsing = true;
+    defaultShared = true;
+    openFirewall = true;
+    extraConf = "DefaultEncryption Never";
+  };
+  services.samba.enable = true;
   services.avahi = {
     enable = true;
     nssmdns4 = true;
@@ -170,27 +186,11 @@
     publish = {
       enable = true;
       userServices = true;
-      addresses = true;
     };
   };
-  services.printing = {
-    enable = true;
-    drivers = with pkgs; [
-      cups-filters
-      cups-browsed
-      cups-zj-58
-    ];
-    listenAddresses = [ "*:631" ];
-    allowFrom = [ "all" ];
-    browsing = true;
-    defaultShared = true;
-    openFirewall = true;
-  };
-  services.samba.enable = true;
 
-  # List services that you want to enable:
-  # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
@@ -200,7 +200,9 @@
       };
     };
   };
+
   security.rtkit.enable = true;
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -214,8 +216,9 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true; # Enable Xwayland for X applications
+    withUWSM = true;
   };
-  # screen recorder
+  # screen recorder needed for Caelestia
   programs.gpu-screen-recorder.enable = true;
 
   xdg.portal = {
@@ -225,15 +228,16 @@
       kdePackages.xdg-desktop-portal-kde
     ];
   };
+
+  programs.uwsm.enable = true; # Recommended by Hyprland
   programs.nm-applet.enable = true;
   programs.localsend.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  networking.firewall.enable = false;
-  networking.firewall.allowedUDPPorts = [ 5353 ];
+  networking.firewall.enable = true;
+  networking.firewall.allowedUDPPorts = [
+    5353
+  ];
+  networking.firewall.allowedTCPPorts = [ 8069 ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

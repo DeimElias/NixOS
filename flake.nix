@@ -15,10 +15,6 @@
       url = "github:caelestia-dots/shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    cli = {
-      url = "github:caelestia-dots/cli";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     rose-pine-hyprcursor = {
       url = "github:ndom91/rose-pine-hyprcursor";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -36,18 +32,24 @@
       ...
     }:
     let
+      #Define system
       system = "x86_64-linux";
-      findOverlays = file: (builtins.baseNameOf file) == "overlay.nix";
-      obtainOverlays = (
+
+      #Overlays stuff searchs recursively for every "overlay.nix" file and imports it
+      isOverlay = file: (baseNameOf file) == "overlay.nix";
+      findOverlays = (
         map (overlay: import overlay) (
-          builtins.filter findOverlays (nixpkgs.lib.filesystem.listFilesRecursive ./.)
+          builtins.filter isOverlay (nixpkgs.lib.filesystem.listFilesRecursive ./.)
         )
       );
-      pkgsWithOverlays =
+
+      importOverlays =
         { ... }:
         {
-          nixpkgs.overlays = obtainOverlays;
+          nixpkgs.overlays = findOverlays;
         };
+
+      #Stable-branch for some packages
       stable = import nixpkgss { inherit system; };
     in
     {
@@ -57,19 +59,22 @@
           inherit stable system inputs;
         };
         modules = [
-          home-manager.nixosModules.home-manager
-          pkgsWithOverlays
+          #Ensure overlays are available to NixOS configurations
+          importOverlays
           ./configuration.nix
+          ./hardware-configs/chimuelo.nix
+          home-manager.nixosModules.home-manager
           {
             home-manager.useUserPackages = true;
             home-manager.users.chimuelo = {
               imports = [
+                #Ensure overlays are available to HomeManager
+                importOverlays
                 ./home.nix
                 shell.homeManagerModules.default
-                pkgsWithOverlays
               ];
             };
-            home-manager.extraSpecialArgs = { inherit zen stable; };
+            home-manager.extraSpecialArgs = { inherit zen stable shell; };
           }
 
           (

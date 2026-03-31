@@ -1,0 +1,31 @@
+diff --git a/lua/r/server.lua b/lua/r/server.lua
+index a53ef64..4bcea71 100644
+--- a/lua/r/server.lua
++++ b/lua/r/server.lua
+@@ -347,26 +347,6 @@ M.check_nvimcom_version = function()
+         if obj.code ~= 0 then warn(obj.stderr) end
+     end
+ 
+-    local t1 = vim.uv.hrtime()
+-    local obj = vim.system(
+-        { "make" },
+-        { text = true, cwd = config.rnvim_home .. "/rnvimserver" }
+-    )
+-        :wait()
+-    if obj.code ~= 0 then
+-        warn(
+-            string.format(
+-                "Error making rnvimserver [%d].\nstdout:\n%s\nstderr:\n%s",
+-                obj.code,
+-                obj.stdout,
+-                obj.stderr
+-            )
+-        )
+-    end
+-    local t2 = vim.uv.hrtime()
+-    local mktm = (t2 - t1) / 1000000000
+-    require("r.edit").add_to_debug_info("make rnvimserver", mktm, "Time")
+-
+     list_libs_from_buffer()
+ 
+     vim.list_extend(

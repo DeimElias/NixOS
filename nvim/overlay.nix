@@ -5,8 +5,8 @@ final: prev: {
       src = final.fetchFromGitHub {
         owner = "R-nvim";
         repo = "R.nvim";
-        rev = "main";
-        sha256 = "sha256-mb8HCaMasPUP9JZUkH1sPrtdbhM2HMUkJEKDsRt6wTs=";
+        rev = "c37d1cfd46fe0c5ab7e5384154adf985c537cbcc";
+        sha256 = "sha256-Qz7fyY/juwA76gzXR8aNkb9fbB0wTWCaG/9qUJMzez0=";
       };
       sourceRoot = "source/nvimcom";
       buildInputs = with final; [
@@ -16,14 +16,30 @@ final: prev: {
       ];
     };
   };
+  r_ls = final.stdenv.mkDerivation {
+    name = "r_ls";
+    src = final.fetchFromGitHub {
+      owner = "R-nvim";
+      repo = "R.nvim";
+      rev = "c37d1cfd46fe0c5ab7e5384154adf985c537cbcc";
+      sha256 = "sha256-Qz7fyY/juwA76gzXR8aNkb9fbB0wTWCaG/9qUJMzez0=";
+    };
+    sourceRoot = "source/rnvimserver";
+    installPhase = ''
+            install -D rnvimserver $out/bin/rnvimserver
+      	'';
+  };
+
   rEnv = prev.radianWrapper.override {
     wrapR = true;
     recommendedPackages =
       prev.radianWrapper.recommendedPackages
       ++ (with final.rPackages; [
+        knitr
+        rmarkdown
+        styler
         tidyverse
         nvimcom
-        languageserver
       ]);
   };
   vimPlugins = prev.vimPlugins // {
@@ -33,27 +49,17 @@ final: prev: {
       src = final.fetchFromGitHub {
         owner = "R-nvim";
         repo = "R.nvim";
-        rev = "main";
-        sha256 = "sha256-mb8HCaMasPUP9JZUkH1sPrtdbhM2HMUkJEKDsRt6wTs=";
+        rev = "c37d1cfd46fe0c5ab7e5384154adf985c537cbcc";
+        sha256 = "sha256-Qz7fyY/juwA76gzXR8aNkb9fbB0wTWCaG/9qUJMzez0=";
       };
+      patches = [ ./patches/remove-rnvimserver-compilation.patch ];
+      # patchPhase = ''
+      #   substituteInPlace r/lsp/init.lua \
+      #   --replace-fail "cmake_minimum_required ( VERSION 3.0 )" "cmake_minimum_required ( VERSION 3.10 )"
+      # '';
       runtimeDeps = [
         final.rEnv
-      ];
-    };
-    cmp-r = final.vimUtils.buildVimPlugin {
-      pname = "cmp-r";
-      version = "2025-08-05";
-      src = final.fetchFromGitHub {
-        owner = "R-nvim";
-        repo = "cmp-r";
-        rev = "main";
-        sha256 = "sha256-TwmLSILu1H3RyRivCQlbsgUN4dsEqO1E8Hx71N/lFws=";
-      };
-      doCheck = false;
-      passthru.runtimeDeps = [ final.quarto ];
-      buildInputs = with final; [
-        R
-        quarto
+        final.r_ls
       ];
     };
     nvim-lspconfig = prev.vimPlugins.nvim-lspconfig.overrideAttrs (
@@ -65,7 +71,7 @@ final: prev: {
           [
             # Language server
             nixd
-            nixfmt-rfc-style
+            nixfmt
             lua-language-server
             ruff
             sqruff
@@ -74,6 +80,10 @@ final: prev: {
             ccls
             tailwindcss-language-server
             vscode-langservers-extracted
+            typescript-language-server
+            eslint
+            gnumake
+            gcc
 
             # Debug adapters
             gdb
@@ -100,7 +110,6 @@ final: prev: {
       which-key-nvim
       blink-cmp
       blink-compat
-      cmp-r
       otter-nvim
       telescope-nvim
       undotree
@@ -115,6 +124,7 @@ final: prev: {
       nui-nvim
       nvim-notify
       diffview-nvim
+      harpoon2
       (tokyonight-nvim.overrideAttrs (original: {
         doCheck = false;
       }))

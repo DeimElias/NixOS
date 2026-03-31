@@ -8,7 +8,6 @@ return {
 	{
 		"saghen/blink.cmp",
 		dependencies = {
-			{ "R-nvim/cmp-r" },
 			{ "jmbuhr/otter.nvim" },
 		},
 		version = "*",
@@ -43,15 +42,10 @@ return {
 				default = { "lsp", "path", "snippets", "buffer" },
 				per_filetype = {
 					sql = { 'snippets', 'dadbod', 'buffer' },
-					quarto = { 'snippets', 'cmp_r', 'otter', 'path' },
-					r = { 'snippets', 'cmp_r', 'otter', 'path' },
+					quarto = { 'lsp', 'snippets', 'otter', 'path' },
+					r = { 'lsp', 'snippets', 'path' },
 				},
 				providers = {
-					cmp_r = {
-						name = "cmp_r",
-						module = "blink.compat.source",
-						opts = {},
-					},
 					otter = {
 						name = "otter",
 						module = "blink.compat.source",

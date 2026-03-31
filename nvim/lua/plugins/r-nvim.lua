@@ -2,9 +2,16 @@ return {
 	{
 		"R-nvim/R.nvim",
 		lazy = false,
+		---@type RConfigUserOpts
 		opts = {
 			-- Create a table with the options to be passed to setup()
-
+			r_ls = {
+				fun_data_2 = {
+					mutate = { "case_match", "case_when", "factor", "as.numeric", "cut" },
+					ggplot = { "aes" },
+					with = { "*" },
+				},
+			},
 			R_app = "radian",
 			bracketed_paste = true,
 			R_args = { "--save", "--restore-data" },
@@ -21,7 +28,7 @@ return {
 					vim.keymap.set("n", "<C-i>", "<Plug>RDSendLine", { buffer = true })
 					vim.keymap.set("v", "<C-i>", "<Plug>RSendSelection", { buffer = true })
 					vim.keymap.set("i", "<C-i>", "<Esc><Plug>RSendLine i", { buffer = true })
-					vim.keymap.set("i", "<C-T>", "|><enter>", { buffer = true })
+					vim.keymap.set("i", "<C-T>", "|>", { buffer = true })
 
 					local wk = require("which-key")
 					wk.add({
@@ -31,7 +38,6 @@ return {
 						{ "<localleader>c", group = "chunks" },
 						{ "<localleader>f", group = "functions" },
 						{ "<localleader>g", group = "goto" },
-						{ "<localleader>i", group = "install" },
 						{ "<localleader>k", group = "knit" },
 						{ "<localleader>p", group = "paragraph" },
 						{ "<localleader>q", group = "quarto" },
