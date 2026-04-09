@@ -99,7 +99,7 @@ final: prev: {
 
   };
 
-  neovim = final.wrapNeovimUnstable final.neovim-unwrapped {
+  myNeovim = final.wrapNeovimUnstable final.neovim-unwrapped {
     vimAlias = true;
     viAlias = true;
     plugins = with final.vimPlugins; [
@@ -144,7 +144,7 @@ final: prev: {
               cp -r ./* $out/lua
       	'';
     fixupPhase = ''
-      	  substituteInPlace $out/lua/plugins/lspconfig.lua --replace FIXME ${final.vimUtils.packDir final.neovim.passthru.packpathDirs}
+      	  substituteInPlace $out/lua/plugins/lspconfig.lua --replace FIXME ${final.vimUtils.packDir final.myNeovim.passthru.packpathDirs}
     '';
   };
 }
