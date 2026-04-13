@@ -4,6 +4,7 @@
   flake.nixosModules.nixOSEssentials =
     { pkgs, lib, ... }:
     {
+      networking.networkmanager.enable = true;
       nix.settings.experimental-features = [
         "nix-command"
         "flakes"
@@ -19,11 +20,6 @@
       };
 
       fonts.packages = [ pkgs.nerd-fonts.fira-code ];
-
-      xdg.mime.enable = true;
-      xdg.mime.defaultApplications = {
-        "application/pdf" = "org.kde.okular.desktop";
-      };
 
       nixpkgs.config.allowUnfree = true;
       hardware.graphics = {
@@ -46,6 +42,12 @@
 
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
+
+      nix.gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 30d";
+      };
 
       # Remap keys
       services.keyd = {

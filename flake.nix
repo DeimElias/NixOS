@@ -22,7 +22,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+    hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs =

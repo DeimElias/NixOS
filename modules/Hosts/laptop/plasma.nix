@@ -1,7 +1,7 @@
 { self, inputs, ... }:
 {
 
-  flake.nixosModules.laptopConfiguration =
+  flake.nixosModules.laptopConfiguration_Plasma =
     { pkgs, lib, ... }:
     {
       # import any other modules from here
@@ -11,7 +11,7 @@
 
         # laptop modules
         self.nixosModules.laptopHardware
-        self.nixosModules.laptopHome
+        self.nixosModules.laptopHome_Plasma
         self.nixosModules.laptopSpecifics
 
         # General modules
@@ -19,12 +19,12 @@
         self.nixosModules.driveSync
         self.nixosModules.printing
         self.nixosModules.winApps
-        self.nixosModules.hyprland
+        self.nixosModules.plasma
         self.nixosModules.gaming
       ];
     };
 
-  flake.nixosModules.laptopHome =
+  flake.nixosModules.laptopHome_Plasma =
     { pkgs, lib, ... }:
     {
 
@@ -33,11 +33,9 @@
         imports = [
           # Default Modules
           self.homeModules.homeEssentials
-          self.homeModules.laptopHyprlandExtraConf
           self.homeModules.graphicalEnv
 
           # General Modules
-          self.homeModules.hyprland
           self.homeModules.winApps
         ];
       };

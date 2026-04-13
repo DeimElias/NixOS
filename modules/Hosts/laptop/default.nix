@@ -1,8 +1,15 @@
 { self, inputs, ... }:
 {
-  flake.nixosConfigurations.chimuelo = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.laptop = inputs.nixpkgs.lib.nixosSystem {
     modules = [
       self.nixosModules.laptopConfiguration
     ];
   };
+
+  flake.nixosConfigurations.laptop_plasma = inputs.nixpkgs.lib.nixosSystem {
+    modules = [
+      self.nixosModules.laptopConfiguration_Plasma
+    ];
+  };
+
 }

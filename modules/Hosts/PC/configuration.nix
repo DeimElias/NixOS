@@ -1,7 +1,7 @@
 { self, inputs, ... }:
 {
 
-  flake.nixosModules.laptopConfiguration =
+  flake.nixosModules.PCConfiguration =
     { pkgs, lib, ... }:
     {
       # import any other modules from here
@@ -10,10 +10,10 @@
         self.nixosModules.nixOSEssentials
 
         # laptop modules
-        self.nixosModules.laptopHardware
-        self.nixosModules.laptopHome
-        self.nixosModules.laptopSpecifics
-
+        # self.nixosModules.PCHardware
+        self.nixosModules.PCHome
+        # self.nixosModules.PCSpecifics
+        #
         # General modules
         self.nixosModules.graphicalEnvEssentials
         self.nixosModules.driveSync
@@ -24,16 +24,16 @@
       ];
     };
 
-  flake.nixosModules.laptopHome =
+  flake.nixosModules.PCHome =
     { pkgs, lib, ... }:
     {
 
       home-manager.useUserPackages = true;
-      home-manager.users.chimuelo = {
+      home-manager.users.adolin = {
         imports = [
           # Default Modules
           self.homeModules.homeEssentials
-          self.homeModules.laptopHyprlandExtraConf
+	  # self.homeModules.PCHyprlandExtraConf
           self.homeModules.graphicalEnv
 
           # General Modules
