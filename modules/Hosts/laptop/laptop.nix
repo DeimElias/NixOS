@@ -26,8 +26,12 @@
           };
         };
       };
+      imports = [
+        inputs.hardware.nixosModules.lenovo-thinkpad-t14-amd-gen5
+      ];
 
       services.upower.enable = true;
+      services.xserver.videoDrivers = [ "amdgpu" ];
       networking.firewall.allowedUDPPorts = [
         5353
       ];

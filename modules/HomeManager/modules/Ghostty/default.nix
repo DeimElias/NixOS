@@ -15,6 +15,7 @@
           window-padding-y = "12,0";
           font-family = "FiraCode Nerd Font Mono";
           background-opacity = 0.78;
+          confirm-close-surface = false;
         };
       };
     };

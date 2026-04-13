@@ -33,32 +33,10 @@
             disable_keybind_grabbing = true;
           };
           env = [
-            "SDL_VIDEODRIVER,wayland"
             "HYPRCURSOR_THEME,rose-pine-hyprcursor"
             "HYPRCURSOR_SIZE,35"
           ];
           "$mod" = "SUPER";
-          monitor = [
-            "eDP-1, preferred, auto, 1"
-            "DP-1, preferred, auto, 1"
-          ];
-          workspace = (
-            builtins.concatLists (
-              builtins.genList (
-                i:
-                let
-                  ws = i + 1;
-                  wss = ws + 4;
-                in
-                [
-                  "${toString ws}, monitor:eDP-1"
-                  "${toString wss}, monitor:DP-1"
-                ]
-              ) 4
-            )
-
-          );
-
           bindm = [
             "$mod, mouse:272, movewindow"
             "$mod, mouse:273, resizewindow"
@@ -116,7 +94,7 @@
             "$mod, R, exec, sdl-freerdp /u:caja /p:1234 /v:10.238.0.25 /cert:ignore /dynamic-resolution +clipboard /t:Windows +unmap-buttons"
             "$mod, E, exec, sdl-freerdp /u:MyWindowsUser /p:MyWindowsPassword /v:127.0.0.1 /cert:ignore /dynamic-resolution +clipboard /t:Windows +drives /printer"
             "$mod, S, exec, localsend_app"
-            "$mod, Space, togglespecialworkspace, special"
+            "$mod, Space, togglespecialworkspace, special:special"
             "$mod, F, togglefloating"
             "$mod, code:60, pin"
             "$mod, M, fullscreen"
@@ -128,7 +106,7 @@
             "$mod, h, movefocus, l"
 
             "$mod+Ctrl, l, workspace, m+1"
-            "$mod+Ctrl, h, workspace, m-1"
+            "$mod+Ctrl, h, workspace, m-1" # Special configuration for each system
 
             "$mod+Shift, Space, movetoworkspace, special:special"
             "$mod, X, global, caelestia:session"
@@ -156,7 +134,6 @@
         pkgs.hyprpicker
       ];
       imports = [
-        self.homeModules.ghostty
         self.homeModules.hyprExtra
       ];
     };
