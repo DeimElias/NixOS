@@ -10,10 +10,9 @@
         self.nixosModules.nixOSEssentials
 
         # laptop modules
-        # self.nixosModules.PCHardware
+        self.nixosModules.PCHardware
         self.nixosModules.PCHome
-        # self.nixosModules.PCSpecifics
-        #
+        self.nixosModules.PCSpecifics
         # General modules
         self.nixosModules.graphicalEnvEssentials
         self.nixosModules.driveSync
@@ -27,13 +26,12 @@
   flake.nixosModules.PCHome =
     { pkgs, lib, ... }:
     {
-
       home-manager.useUserPackages = true;
-      home-manager.users.adolin = {
+      home-manager.users.chimuelo = {
         imports = [
           # Default Modules
           self.homeModules.homeEssentials
-	  # self.homeModules.PCHyprlandExtraConf
+          self.homeModules.PCHyprlandExtraConf
           self.homeModules.graphicalEnv
 
           # General Modules

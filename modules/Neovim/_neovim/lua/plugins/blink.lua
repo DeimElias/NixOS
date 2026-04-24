@@ -8,7 +8,7 @@ return {
 	{
 		"saghen/blink.cmp",
 		dependencies = {
-			{ "jmbuhr/otter.nvim" },
+			{ "jmbuhr/otter.nvim", opts = {} },
 		},
 		version = "*",
 		---@module 'blink.cmp'

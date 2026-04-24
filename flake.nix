@@ -7,14 +7,19 @@
     stable.url = "github:NixOS/nixpkgs/nixos-25.11";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    zen.url = "github:youwen5/zen-browser-flake";
-    zen.inputs.nixpkgs.follows = "nixpkgs";
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
     winapps = {
       url = "github:winapps-org/winapps";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     shell = {
-      url = "github:caelestia-dots/shell";
+      url = "github:caelestia-dots/shell/v1.5.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     rose-pine-hyprcursor = {
@@ -23,6 +28,7 @@
     };
 
     hardware.url = "github:NixOS/nixos-hardware/master";
+    stylix.url = "github:nix-community/stylix/master";
   };
 
   outputs =

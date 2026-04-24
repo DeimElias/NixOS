@@ -3,6 +3,7 @@
   flake.homeModules.tmux =
     { pkgs, lib, ... }:
     {
+      stylix.targets.tmux.enable = false;
       programs.tmux = {
         baseIndex = 1;
         customPaneNavigationAndResize = true;

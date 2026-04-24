@@ -19,7 +19,10 @@
         variant = "";
       };
 
-      fonts.packages = [ pkgs.nerd-fonts.fira-code ];
+      fonts.packages = [
+        pkgs.nerd-fonts.fira-code
+        pkgs.dejavu_fonts
+      ];
 
       nixpkgs.config.allowUnfree = true;
       hardware.graphics = {
@@ -99,9 +102,14 @@
       security.rtkit.enable = true;
 
       programs.nm-applet.enable = true;
+      programs.direnv.enable = true;
       networking.firewall.enable = true;
 
-      services.getty.autologinUser = "chimuelo";
+      imports = [
+        self.inputs.stylix.nixosModules.stylix
+        self.nixosModules.style
+        self.nixosModules.plymouth
+      ];
       system.stateVersion = "25.05";
     };
 }

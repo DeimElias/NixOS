@@ -2,7 +2,7 @@
 {
   flake.nixosConfigurations.tower = inputs.nixpkgs.lib.nixosSystem {
     modules = [
-      self.nixosModules.PCconfiguration
+      self.nixosModules.PCConfiguration
     ];
   };
 }

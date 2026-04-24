@@ -102,7 +102,7 @@
           ];
           bindr = "SUPER, D, global, caelestia:launcher";
           bind = [
-            "$mod, W, exec, zen"
+            "$mod, W, exec, zen-beta"
             "$mod, RETURN, exec, ghostty"
             "$mod, C, killactive,"
             "$mod+SHIFT, C, forcekillactive,"
