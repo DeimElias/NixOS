@@ -6,6 +6,11 @@
     {
       services.displayManager.ly = {
         enable = true;
+        settings = {
+          animation = "colormix";
+          # dur_file_path = "${self.packages.${pkgs.stdenv.system}.lyAnimations}/blackhole-smooth-240x67.dur"; # Full path to your file
+          animation_frame_delay = 5;
+        };
       };
       programs.hyprland = {
         enable = true;
@@ -74,5 +79,13 @@
         '';
 
       });
+      packages.lyAnimations = pkgs.stdenv.mkDerivation {
+        pname = "ly_custom_animations";
+        version = "1.0";
+        src = ./.;
+        installPhase = ''
+                  cp -r ./animations $out/
+          	'';
+      };
     };
 }
