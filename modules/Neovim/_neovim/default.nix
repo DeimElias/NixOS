@@ -78,6 +78,7 @@ final: prev: {
             pyright
             jinja-lsp
             ccls
+            harper
             tailwindcss-language-server
             vscode-langservers-extracted
             typescript-language-server
@@ -132,6 +133,7 @@ final: prev: {
       nvim-treesitter.withAllGrammars
       nvim-dap
       nvim-dap-ui
+      render-markdown-nvim
     ];
     luaRcContent = (import ./lua.nix { inherit final; });
   };

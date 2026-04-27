@@ -17,7 +17,6 @@
         browsing = true;
         defaultShared = true;
         openFirewall = true;
-        extraConf = "DefaultEncryption Never";
       };
       services.samba.enable = true;
     };
