@@ -29,6 +29,7 @@
 
     hardware.url = "github:NixOS/nixos-hardware/master";
     stylix.url = "github:nix-community/stylix/master";
+    preload-ng.url = "github:miguel-b-p/preload-ng";
   };
 
   outputs =
