@@ -32,8 +32,8 @@
         enable = true;
         defaultApplications = {
           "application/pdf" = "org.kde.okular.desktop";
-          "inode/directory" = [ "dolphin.desktop" ];
-          "application/x-gnome-saved-search" = [ "dolphin.desktop" ];
+          "inode/directory" = [ "org.kde.dolphin.desktop" ];
+          "application/x-gnome-saved-search" = [ "org.kde.dolphin.desktow" ];
         };
       };
 
@@ -48,7 +48,6 @@
         self.packages.${pkgs.stdenv.hostPlatform.system}.impala-wt
         inputs.rose-pine-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
-      # networking.wireless.iwd.enable = true; # requiered by impala
     };
 
   perSystem =

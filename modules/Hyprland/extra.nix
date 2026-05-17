@@ -13,6 +13,7 @@
         pkgs.libnotify
         pkgs.kdePackages.qtsvg
         pkgs.kdePackages.dolphin
+        pkgs.kdePackages.plasma-workspace
       ];
       services.udiskie = {
         enable = true;

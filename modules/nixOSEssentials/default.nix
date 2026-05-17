@@ -27,6 +27,7 @@
       nixpkgs.config.allowUnfree = true;
       hardware.graphics = {
         enable = true;
+        enable32Bit = true;
       };
       users.users.chimuelo = {
         isNormalUser = true;

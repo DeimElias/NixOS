@@ -10,5 +10,6 @@
       ];
       stylix.targets.zen-browser.profileNames = [ "default" ];
       programs.zen-browser.enable = true;
+      gtk.gtk4.theme = null;
     };
 }
