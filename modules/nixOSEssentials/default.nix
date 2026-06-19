@@ -37,6 +37,8 @@
           "wheel"
           "docker"
           "lpadmin"
+          "lp"
+          "scanner"
         ];
         shell = pkgs.nushell;
         initialPassword = "test";

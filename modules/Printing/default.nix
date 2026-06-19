@@ -13,6 +13,7 @@
           epson-tm-t88vi
           epson-escpr2
         ];
+        listenAddresses = [ "*:631" ];
         allowFrom = [ "all" ];
         browsing = true;
         defaultShared = true;

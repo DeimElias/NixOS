@@ -12,14 +12,17 @@
         terminal = "screen-256color";
         extraConfig =
           let
-            conf = (builtins.readFile ./nuscripts/config.nu);
-            project = (builtins.readFile ./nuscripts/projects.nu);
-            fbtop = (builtins.readFile ./nuscripts/fbtop.nu);
+            tconf = (builtins.readFile ./nuscripts/config.nu);
+            tproject = (builtins.readFile ./nuscripts/projects.nu);
+            tfbtop = (builtins.readFile ./nuscripts/fbtop.nu);
+            project = (pkgs.writeText "project.nu" tproject);
+            conf = (pkgs.writeText "config.nu" tconf);
+            btop = (pkgs.writeText "fbtop.nu" tfbtop);
           in
           ''
-                            bind p run-shell "nu ${pkgs.writeText "project.nu" project}"
-                            bind o run-shell "nu ${pkgs.writeText "config.nu" conf}"
-                            bind i run-shell "nu ${pkgs.writeText "fbtop.nu" fbtop}"
+                            bind p run-shell "nu ${project}"
+                            bind o run-shell "nu ${conf}"
+                            bind i run-shell "nu ${btop}"
                     		set-option -g status-position top
             				bind-key -n M-1 select-window -t 1
             				bind-key -n M-2 select-window -t 2
