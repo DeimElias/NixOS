@@ -30,11 +30,27 @@
         inputs.hardware.nixosModules.lenovo-thinkpad-t14-amd-gen5
       ];
 
+      services.calibre-web = {
+        enable = true;
+        openFirewall = true;
+        listen = {
+          ip = "0.0.0.0";
+          port = 8083;
+        };
+      };
+      systemd.services.calibre-web.serviceConfig = {
+        ReadWritePaths = [ "/mnt/ebooks/Calibre" ];
+      };
+
       services.upower.enable = true;
       services.xserver.videoDrivers = [ "amdgpu" ];
       networking.firewall.allowedUDPPorts = [
+        8083
         5353
       ];
-      networking.firewall.allowedTCPPorts = [ 8069 ];
+      networking.firewall.allowedTCPPorts = [
+        8083
+        8069
+      ];
     };
 }

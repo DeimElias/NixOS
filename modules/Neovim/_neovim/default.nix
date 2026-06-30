@@ -5,8 +5,8 @@ final: prev: {
       src = final.fetchFromGitHub {
         owner = "R-nvim";
         repo = "R.nvim";
-        rev = "c37d1cfd46fe0c5ab7e5384154adf985c537cbcc";
-        sha256 = "sha256-Qz7fyY/juwA76gzXR8aNkb9fbB0wTWCaG/9qUJMzez0=";
+        rev = "v0.99.5";
+        sha256 = "sha256-VxgKMOP1hseQre3cas2dmMXZu4PVyl05INla2OdHTU4=";
       };
       sourceRoot = "source/nvimcom";
       buildInputs = with final; [
@@ -21,8 +21,8 @@ final: prev: {
     src = final.fetchFromGitHub {
       owner = "R-nvim";
       repo = "R.nvim";
-      rev = "c37d1cfd46fe0c5ab7e5384154adf985c537cbcc";
-      sha256 = "sha256-Qz7fyY/juwA76gzXR8aNkb9fbB0wTWCaG/9qUJMzez0=";
+      rev = "v0.99.5";
+      sha256 = "sha256-VxgKMOP1hseQre3cas2dmMXZu4PVyl05INla2OdHTU4=";
     };
     sourceRoot = "source/rnvimserver";
     installPhase = ''
@@ -49,8 +49,8 @@ final: prev: {
       src = final.fetchFromGitHub {
         owner = "R-nvim";
         repo = "R.nvim";
-        rev = "c37d1cfd46fe0c5ab7e5384154adf985c537cbcc";
-        sha256 = "sha256-Qz7fyY/juwA76gzXR8aNkb9fbB0wTWCaG/9qUJMzez0=";
+        rev = "v0.99.5";
+        sha256 = "sha256-VxgKMOP1hseQre3cas2dmMXZu4PVyl05INla2OdHTU4=";
       };
       patches = [ ./patches/remove-rnvimserver-compilation.patch ];
       # patchPhase = ''
@@ -90,9 +90,11 @@ final: prev: {
             gdb
 
             # runtimeDeps
+            websocat
             ripgrep
             sqlcmd
             sqlite
+            typst
           ]
           ++ final.lib.optionals (original.passthru ? runtimeDeps) original.passthru.runtimeDeps;
       }
@@ -113,6 +115,15 @@ final: prev: {
       blink-compat
       otter-nvim
       telescope-nvim
+      typst-preview-nvim
+      # (typst-preview-nvim.overrideAttrs {
+      #   patches = [
+      #     (final.fetchpatch {
+      #       url = "https://github.com/Daniel-42-z/typst-preview.nvim/commit/f3d1cf863f9d626629fc80b5dd85195117dcf338.patch";
+      #       hash = "sha256-IzwFwH05jis2tOaoIIF+g4wecw11lG+6cEZlOE3PqQQ=";
+      #     })
+      #   ];
+      # })
       undotree
       vim-dadbod
       vim-dadbod-ui
@@ -146,6 +157,8 @@ final: prev: {
               cp -r ./* $out/lua
       	'';
     fixupPhase = ''
+          substituteInPlace $out/lua/plugins/tinymist-preview.lua --replace TINYMIST ${final.tinymist}/bin/tinymist
+          substituteInPlace $out/lua/plugins/tinymist-preview.lua --replace WEBSOCAT ${final.websocat}/bin/websocat
       	  substituteInPlace $out/lua/plugins/lspconfig.lua --replace FIXME ${final.vimUtils.packDir final.myNeovim.passthru.packpathDirs}
     '';
   };

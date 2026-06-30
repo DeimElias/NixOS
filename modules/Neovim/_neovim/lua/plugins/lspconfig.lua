@@ -78,6 +78,11 @@ return {
         vim.lsp.config('html', {
             capabilities = capabilities,
         })
+        vim.lsp.config('tinymist', {
+            cmd = { "tinymist" },
+            filetypes = { "typst" },
+        })
+
         vim.filetype.add {
             extension = {
                 jinja = 'jinja',
@@ -94,6 +99,7 @@ return {
         vim.lsp.enable("nixd")
         vim.lsp.enable("harper_ls")
         vim.lsp.enable("lua_ls")
+        vim.lsp.enable("tinymist")
         vim.lsp.enable("ruff")
         vim.lsp.enable("ts_ls")
         vim.lsp.enable("eslint")

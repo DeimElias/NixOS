@@ -18,7 +18,7 @@ def 'main' [projects?: string] {
 }
 
 def 'newProject' [mainDir: string] {
-	const lang = ['R', 'Python','Nix', 'C', 'Nu', 'Dart', 'Rust', 'Lua', 'Zig']
+	const lang = ['Typst', 'R', 'Python','Nix', 'C', 'Nu', 'Dart', 'Rust', 'Lua', 'Zig']
 	let selected_lang = ($lang | str join (char nl) | fzf --tmux 80%,80%)
     if ($selected_lang | is-empty) { return null }
 	let project = ("" | fzf --tmux 30%,10% --print-query --no-separator --no-info --header="Project name:" | str join | str trim)
