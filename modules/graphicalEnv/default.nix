@@ -11,6 +11,7 @@
 
         inputs.stable.legacyPackages."${pkgs.stdenv.hostPlatform.system}".calibre
         pkgs.libreoffice-qt6-fresh
+        pkgs.brave
         pkgs.qbz
       ];
       services.pipewire = {
