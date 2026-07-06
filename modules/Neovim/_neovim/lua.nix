@@ -48,10 +48,10 @@
       -- Set window border
       vim.opt.winborder = 'rounded'
   	-- tabs
-  	vim.opt.expandtab = true
-  	vim.opt.softtabstop = 4
-      vim.opt.tabstop = 4
-      vim.opt.shiftwidth = 4
+    vim.opt.expandtab = true
+    vim.opt.softtabstop = 2
+      vim.opt.tabstop = 2
+      vim.opt.shiftwidth = 2
 
       -- TIP: Disable arrow keys in normal and insert mode
       vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
