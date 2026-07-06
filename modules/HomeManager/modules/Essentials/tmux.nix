@@ -20,9 +20,9 @@
             btop = (pkgs.writeText "fbtop.nu" tfbtop);
           in
           ''
-                            bind p run-shell "nu ${project}"
-                            bind o run-shell "nu ${conf}"
-                            bind i run-shell "nu ${btop}"
+                            bind p run-shell "nu --no-config-file ${project}"
+                            bind o run-shell "nu --no-config-file ${conf}"
+                            bind i run-shell "nu --no-config-file ${btop}"
                     		set-option -g status-position top
             				bind-key -n M-1 select-window -t 1
             				bind-key -n M-2 select-window -t 2
