@@ -43,6 +43,8 @@
             rounding = 10;
           };
           input = {
+            kb_layout = "us";
+            kb_variant = "altgr-intl";
             numlock_by_default = true;
           };
           binds = {
