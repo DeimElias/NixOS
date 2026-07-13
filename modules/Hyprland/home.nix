@@ -106,7 +106,7 @@
             "$mod, RETURN, exec, ghostty"
             "$mod, C, killactive,"
             "$mod+SHIFT, C, forcekillactive,"
-            "$mod, B, exec, blueman-manager"
+            "$mod, B, exec, overskride"
             "$mod, R, exec, sdl-freerdp /u:caja /p:1234 /v:10.238.0.25 /cert:ignore /dynamic-resolution +clipboard /t:Windows +unmap-buttons"
             "$mod, E, exec, sdl-freerdp /u:MyWindowsUser /p:MyWindowsPassword /v:127.0.0.1 /cert:ignore /dynamic-resolution +clipboard /t:Windows +drives /printer"
             "$mod, S, exec, localsend_app"

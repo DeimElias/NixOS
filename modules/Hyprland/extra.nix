@@ -8,7 +8,7 @@
     }:
     {
       home.packages = [
-        pkgs.blueman
+        pkgs.overskride
         pkgs.dialog
         pkgs.libnotify
         pkgs.kdePackages.qtsvg

@@ -20,5 +20,6 @@
         openFirewall = true;
       };
       services.samba.enable = true;
+      services.ipp-usb.enable = true;
     };
 }
