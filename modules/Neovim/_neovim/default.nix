@@ -85,6 +85,7 @@ final: prev: {
             eslint
             gnumake
             gcc
+            tinymist
 
             # Debug adapters
             gdb
