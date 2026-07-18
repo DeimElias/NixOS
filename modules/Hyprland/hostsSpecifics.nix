@@ -8,6 +8,7 @@
     }:
     {
       wayland.windowManager.hyprland.extraConfig = ''
+        hl.monitor({output="eDP-1", mode="1920x1200@60", position = "auto", scale = 1.2})
         hl.workspace_rule({workspace="r[1-4]", monitor = "eDP-1"})
         hl.workspace_rule({workspace="r[5-8]", monitor = "DP-1"})
         hl.workspace_rule({workspace="special:special", on_created_empty= "sdl-freerdp /u:caja /p:1234 /v:10.238.0.25 /cert:ignore /dynamic-resolution +clipboard /t:Windows +unmap-buttons"})

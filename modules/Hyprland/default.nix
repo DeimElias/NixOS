@@ -26,6 +26,22 @@
           xdg-desktop-portal-hyprland
           kdePackages.xdg-desktop-portal-kde
         ];
+        config = {
+          hyprland = {
+            default = [
+              "kde"
+            ];
+            "org.freedesktop.impl.portal.ScreenCast" = [
+              "hyprland"
+            ];
+            "org.freedesktop.impl.portal.GlobalShortcuts" = [
+              "hyprland"
+            ];
+            "org.freedesktop.impl.portal.ScreenShoot" = [
+              "hyprland"
+            ];
+          };
+        };
       };
 
       xdg.mime = {
@@ -33,7 +49,7 @@
         defaultApplications = {
           "application/pdf" = "org.kde.okular.desktop";
           "inode/directory" = [ "org.kde.dolphin.desktop" ];
-          "application/x-gnome-saved-search" = [ "org.kde.dolphin.desktow" ];
+          "application/x-gnome-saved-search" = [ "org.kde.dolphin.desktop" ];
         };
       };
 
