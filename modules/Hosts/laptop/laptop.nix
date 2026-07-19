@@ -32,6 +32,7 @@
 
       services.calibre-web = {
         enable = true;
+        package = inputs.stable.legacyPackages."${pkgs.stdenv.hostPlatform.system}".calibre-web;
         openFirewall = true;
         listen = {
           ip = "0.0.0.0";
