@@ -85,7 +85,8 @@
               })
               hl.animation({ leaf = "fade", enabled = true, speed = 2, bezier = "standard" })
               hl.animation({ leaf = "fadeDim", enabled = true, speed = 2, bezier = "standard" })
-              hl.animation({ leaf = "border", enabled = true, speed = 2, bezier = "standard" })
+              hl.animation({ leaf = "border", enabled = true, speed = 40, bezier = "standard" })
+              hl.animation({ leaf = "borderangle", enabled = true, speed = 40, bezier = "standard", style = "loop"})
             '';
         };
         settings =
@@ -94,6 +95,17 @@
           in
           {
             config = {
+              general = {
+                border_size = 2;
+                "col.active_border" = lib.mkForce {
+                  colors = [
+                    "#FFFFFF"
+                    "#70A0F7"
+                    "#FFFFFF"
+                  ];
+                  angle = 45;
+                };
+              };
               misc = {
                 force_default_wallpaper = 1;
               };
