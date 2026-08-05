@@ -65,6 +65,8 @@
               hl.curve("emphasizedAccel", { type = "bezier", points = { { 0.3, 0 }, { 0.8, 0.15 } } })
               hl.curve("emphasizedDecel", { type = "bezier", points = { { 0.05, 0.7 }, { 0.1, 1 } } })
               hl.curve("standard", { type = "bezier", points = { { 0.2, 0 }, { 0, 1 } } })
+              hl.curve("normal", { type = "bezier", points = { { 0, 0 }, { 1, 1 } } })
+              hl.curve("normal", { type = "spring", mass = 1, stiffness = 1, dampening = 0.6 })
 
               -- Animation configs
               hl.animation({ leaf = "layersIn", enabled = true, speed = 2, bezier = "emphasizedDecel", style = "popin" })
@@ -85,8 +87,13 @@
               })
               hl.animation({ leaf = "fade", enabled = true, speed = 2, bezier = "standard" })
               hl.animation({ leaf = "fadeDim", enabled = true, speed = 2, bezier = "standard" })
+<<<<<<< HEAD
               hl.animation({ leaf = "border", enabled = true, speed = 40, bezier = "standard" })
               hl.animation({ leaf = "borderangle", enabled = true, speed = 40, bezier = "standard", style = "loop"})
+=======
+              hl.animation({ leaf = "border", enabled = true, speed = 40, bezier = "normal" })
+              hl.animation({ leaf = "borderangle", enabled = true, speed = 40, bezier = "normal", style = "loop"})
+>>>>>>> 5f2389f5aad791a8a18e88b4f0314ccff6c8abf6
             '';
         };
         settings =
@@ -99,11 +106,19 @@
                 border_size = 2;
                 "col.active_border" = lib.mkForce {
                   colors = [
+<<<<<<< HEAD
                     "#FFFFFF"
                     "#70A0F7"
                     "#FFFFFF"
                   ];
                   angle = 45;
+=======
+                    "#C792EA"
+                    "#70A0F7"
+                    "#C792EA"
+                  ];
+                  angle = 1;
+>>>>>>> 5f2389f5aad791a8a18e88b4f0314ccff6c8abf6
                 };
               };
               misc = {
@@ -116,6 +131,7 @@
               };
               decoration = {
                 rounding = 10;
+                dim_inactive = true;
               };
               input = {
                 kb_layout = "us";
