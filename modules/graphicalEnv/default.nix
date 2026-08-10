@@ -9,7 +9,18 @@
 
         (pkgs.freerdp.override { withWaylandSupport = true; })
 
-        inputs.stable.legacyPackages."${pkgs.stdenv.hostPlatform.system}".calibre
+        (pkgs.calibre.overrideAttrs (oldAttrs: {
+          qtWrapperArgs = (oldAttrs.qtWrapperArgs or [ ]) ++ [
+            "--prefix"
+            "LD_LIBRARY_PATH"
+            ":"
+            "${pkgs.lib.makeLibraryPath [ pkgs.openssl ]}"
+          ];
+          # Inject PyCryptodome into Calibre's Python environment
+          propagatedBuildInputs = (oldAttrs.propagatedBuildInputs or [ ]) ++ [
+            pkgs.python3Packages.pycryptodome
+          ];
+        }))
         pkgs.libreoffice-qt6-fresh
         pkgs.brave
         pkgs.qbz

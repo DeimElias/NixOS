@@ -12,7 +12,8 @@
         HandleLidSwitchExternalPower = "lock";
         HandleLidSwitchDocked = "ignore";
       };
-
+      hardware.logitech.wireless.enable = true;
+      hardware.logitech.wireless.enableGraphical = true;
       services.auto-cpufreq = {
         enable = true;
         settings = {
