@@ -87,13 +87,8 @@
               })
               hl.animation({ leaf = "fade", enabled = true, speed = 2, bezier = "standard" })
               hl.animation({ leaf = "fadeDim", enabled = true, speed = 2, bezier = "standard" })
-<<<<<<< HEAD
               hl.animation({ leaf = "border", enabled = true, speed = 40, bezier = "standard" })
               hl.animation({ leaf = "borderangle", enabled = true, speed = 40, bezier = "standard", style = "loop"})
-=======
-              hl.animation({ leaf = "border", enabled = true, speed = 40, bezier = "normal" })
-              hl.animation({ leaf = "borderangle", enabled = true, speed = 40, bezier = "normal", style = "loop"})
->>>>>>> 5f2389f5aad791a8a18e88b4f0314ccff6c8abf6
             '';
         };
         settings =
@@ -106,19 +101,11 @@
                 border_size = 2;
                 "col.active_border" = lib.mkForce {
                   colors = [
-<<<<<<< HEAD
-                    "#FFFFFF"
-                    "#70A0F7"
-                    "#FFFFFF"
-                  ];
-                  angle = 45;
-=======
                     "#C792EA"
                     "#70A0F7"
                     "#C792EA"
                   ];
                   angle = 1;
->>>>>>> 5f2389f5aad791a8a18e88b4f0314ccff6c8abf6
                 };
               };
               misc = {
@@ -144,14 +131,38 @@
                 scroll_event_delay = 8;
               };
             };
-            on = {
-              _args = [
-                "hyprland.start"
-                (lua ''function() hl.exec_cmd("${
-                  lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.caelestia
-                }") end'')
-              ];
-            };
+            on = [
+              {
+                _args = [
+                  "hyprland.start"
+                  (lua ''function() hl.exec_cmd("${
+                    lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.caelestia
+                  }") end'')
+                ];
+              }
+              {
+                _args = [
+                  "window.title"
+                  (lua ''
+                    function(w)
+                      if w ~= nil and w.title:match("Extension:") then
+                        hl.notification.create({
+                          text = "extension matched",
+                          timeout = 3000
+                          })
+                        local monitor = hl.get_monitor(0)
+                        local target_width = math.floor(monitor.width / 3)
+                        local target_height = math.floor(monitor.height / 2)
+                        hl.dispatch(hl.dsp.window.float({ action = "on", window = w}))
+                        hl.dispatch(hl.dsp.window.resize({ x = target_width, y = target_height, window = w}))
+                        hl.dispatch(hl.dsp.window.alter_zorder({ mode  = "top", window = w}))
+                        hl.dispatch(hl.dsp.window.center({ window = w }))
+                        hl.dispatch(hl.dsp.focus({ window = w }))
+                      end
+                    end'')
+                ];
+              }
+            ];
             env = [
               {
                 _args = [
@@ -419,7 +430,7 @@
               {
                 _args = [
                   "SUPER + Space"
-                  (lua ''hl.dsp.workspace.toggle_special("special:special")'')
+                  (lua ''hl.dsp.workspace.toggle_special("Extra")'')
                   { }
                 ];
 
@@ -498,8 +509,8 @@
               }
               {
                 _args = [
-                  "SUPER + SHIFT +Space"
-                  (lua ''hl.dsp.window.move({workspace = "special:special"})'')
+                  "SUPER + SHIFT + Space"
+                  (lua ''hl.dsp.window.move({workspace = "special:Extra"})'')
                   { }
                 ];
 
@@ -563,6 +574,14 @@
                 ]
               ) 4
             ));
+            window_rule = [
+              {
+                match = {
+                  initial_class = "brave.*";
+                };
+                no_dim = true;
+              }
+            ];
             gesture = {
               fingers = 3;
               direction = "horizontal";
