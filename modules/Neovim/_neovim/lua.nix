@@ -3,6 +3,8 @@
 ''
       vim.g.mapleader = " "       -- Need to set leader before lazy for correct keybindings
 
+      vim.o.exrc = true
+
       -- Save undo history
       vim.opt.undofile = true
 
