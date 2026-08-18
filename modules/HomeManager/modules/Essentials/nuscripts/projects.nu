@@ -2,7 +2,7 @@
 
 def 'main' [projects?: string] {
   let projects_dir = ($projects| default { $env | get --optional PROJECTS | default /home/chimuelo/Projects/ })
-  let selection  = (glob ($projects_dir + '*/*') | str replace $projects_dir '' | to text | $in + "New Project" | fzf --tmux 80%,80%)
+  let selection  = (glob -d 2 ($projects_dir + '*/*') | str replace $projects_dir '' | to text | $in + "New Project" | fzf --tmux 80%,80%)
   let selected_project = match $selection {
     "New Project" => (newProject $projects_dir),
     "" => {return},
