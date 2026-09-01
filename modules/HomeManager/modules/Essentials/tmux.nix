@@ -5,7 +5,6 @@
     {
       stylix.targets.tmux.enable = false;
       programs.tmux = {
-        baseIndex = 1;
         customPaneNavigationAndResize = true;
         enable = true;
         keyMode = "vi";
@@ -24,6 +23,7 @@
                             bind o run-shell "nu --no-config-file ${conf}"
                             bind i run-shell "nu --no-config-file ${btop}"
                     		set-option -g status-position top
+                        set -g renumber-windows on
             				bind-key -n M-1 select-window -t 1
             				bind-key -n M-2 select-window -t 2
             				bind-key -n M-3 select-window -t 3
