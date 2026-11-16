@@ -24,6 +24,7 @@
     {
       wayland.windowManager.hyprland.extraConfig = ''
         hl.monitor({output="DP-2", mode="2560x1440@143.91", position = "auto", scale = 1})
+        hl.monitor({output="HDMI-A-1", mode="3840x2160@60", position = "auto", scale = 1.25})
       '';
     };
 }
