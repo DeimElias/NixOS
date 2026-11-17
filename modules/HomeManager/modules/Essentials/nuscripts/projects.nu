@@ -14,7 +14,7 @@ def 'main' [projects?: string] {
   if (tmux has-session -t $'($project.name | to text -n)'| complete | $in.exit_code == 1) {
     tmux new -s $'($project.name | to text -n)' -d -c $'($project_path)'
   }
-  tmux switch -t $'($project.name | to text -n)'
+  tmux switch-client -t $'($project.name | to text -n)'
 }
 
 def 'newProject' [mainDir: string] {
