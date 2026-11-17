@@ -4,6 +4,7 @@
     { pkgs, lib, ... }:
     {
       stylix.targets.tmux.enable = false;
+      stylix.targets.fzf.enable = false;
       programs.tmux = {
         customPaneNavigationAndResize = true;
         baseIndex = 1;
@@ -34,7 +35,8 @@
             				bind-key -n M-7 select-window -t 7
             				bind-key -n M-8 select-window -t 8
             				bind-key -n M-9 select-window -t 9
-            				bind-key -n M-0 select-window -t 0
+                    bind-key -n M-0 select-window -t 0
+                    set -s theme terminal
           '';
         plugins = [
           {

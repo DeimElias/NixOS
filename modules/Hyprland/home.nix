@@ -606,7 +606,7 @@
                 match = {
                   initial_class = "rustdesk";
                 };
-                fullscreen_state = "0 2";
+                fullscreen = true;
               }
             ];
             gesture = {
