@@ -5,8 +5,8 @@ final: prev: {
       src = final.fetchFromGitHub {
         owner = "R-nvim";
         repo = "R.nvim";
-        rev = "v0.99.5";
-        sha256 = "sha256-VxgKMOP1hseQre3cas2dmMXZu4PVyl05INla2OdHTU4=";
+        rev = "v1.0.0";
+        sha256 = "sha256-FywUL3mV2+kfu+rO6uUFyUv80EflbdgSkYuSnW965UE=";
       };
       sourceRoot = "source/nvimcom";
       buildInputs = with final; [
@@ -21,8 +21,8 @@ final: prev: {
     src = final.fetchFromGitHub {
       owner = "R-nvim";
       repo = "R.nvim";
-      rev = "v0.99.5";
-      sha256 = "sha256-VxgKMOP1hseQre3cas2dmMXZu4PVyl05INla2OdHTU4=";
+      rev = "v1.0.0";
+      sha256 = "sha256-FywUL3mV2+kfu+rO6uUFyUv80EflbdgSkYuSnW965UE=";
     };
     sourceRoot = "source/rnvimserver";
     installPhase = ''
@@ -49,14 +49,10 @@ final: prev: {
       src = final.fetchFromGitHub {
         owner = "R-nvim";
         repo = "R.nvim";
-        rev = "v0.99.5";
-        sha256 = "sha256-VxgKMOP1hseQre3cas2dmMXZu4PVyl05INla2OdHTU4=";
+        rev = "v1.0.0";
+        sha256 = "sha256-FywUL3mV2+kfu+rO6uUFyUv80EflbdgSkYuSnW965UE=";
       };
       patches = [ ./patches/remove-rnvimserver-compilation.patch ];
-      # patchPhase = ''
-      #   substituteInPlace r/lsp/init.lua \
-      #   --replace-fail "cmake_minimum_required ( VERSION 3.0 )" "cmake_minimum_required ( VERSION 3.10 )"
-      # '';
       runtimeDeps = [
         final.rEnv
         final.r_ls

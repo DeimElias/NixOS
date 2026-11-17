@@ -136,6 +136,9 @@
       --- Add ./Lua directory to VimRintimePath so LazyVim can read lua files
       vim.opt.runtimepath:append("${final.neovim-conf}")
 
+      --- R.nvim filetypes
+      vim.g.R_filetypes = { "r", "rmd", "rnoweb", "quarto"}
+
       require("lazy").setup(
       	{
       		performance = {
