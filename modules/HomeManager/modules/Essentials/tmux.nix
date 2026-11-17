@@ -6,6 +6,7 @@
       stylix.targets.tmux.enable = false;
       programs.tmux = {
         customPaneNavigationAndResize = true;
+        baseIndex = 1;
         enable = true;
         keyMode = "vi";
         terminal = "screen-256color";
