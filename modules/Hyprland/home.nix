@@ -146,10 +146,24 @@
                   (lua ''
                     function(w)
                       if w ~= nil and w.title:match("Extension:") then
-                        hl.notification.create({
-                          text = "extension matched",
-                          timeout = 3000
-                          })
+                        local monitor = hl.get_monitor(0)
+                        local target_width = math.floor(monitor.width / 3)
+                        local target_height = math.floor(monitor.height / 2)
+                        hl.dispatch(hl.dsp.window.float({ action = "on", window = w}))
+                        hl.dispatch(hl.dsp.window.resize({ x = target_width, y = target_height, window = w}))
+                        hl.dispatch(hl.dsp.window.alter_zorder({ mode  = "top", window = w}))
+                        hl.dispatch(hl.dsp.window.center({ window = w }))
+                        hl.dispatch(hl.dsp.focus({ window = w }))
+                      end
+                    end'')
+                ];
+              }
+              {
+                _args = [
+                  "window.title"
+                  (lua ''
+                    function(w)
+                      if w ~= nil and w.title:match("Authentication Required") then
                         local monitor = hl.get_monitor(0)
                         local target_width = math.floor(monitor.width / 3)
                         local target_height = math.floor(monitor.height / 2)
@@ -309,7 +323,7 @@
               }
               {
                 _args = [
-                  "SUPER"
+                  "SUPER_L"
                   (lua ''hl.dsp.global("caelestia:LaunherInterrupt")'')
                   { }
                 ];
@@ -406,7 +420,7 @@
               {
                 _args = [
                   "SUPER + R"
-                  (lua ''hl.dsp.exec_cmd("sdl-freerdp /u:caja /p:1234 /v:10.238.0.25 /cert:ignore /dynamic-resolution +clipboard /t:Windows +unmap-buttons")'')
+                  (lua ''hl.dsp.exec_cmd("rustdesk --connect 10.238.0.25")'')
                   { }
                 ];
 
@@ -581,6 +595,19 @@
                 };
                 no_dim = true;
               }
+              {
+                match = {
+                  initial_class = "emulator";
+                };
+                no_dim = true;
+                float = true;
+              }
+              {
+                match = {
+                  initial_class = "rustdesk";
+                };
+                fullscreen_state = "0 2";
+              }
             ];
             gesture = {
               fingers = 3;
@@ -604,18 +631,7 @@
       ...
     }:
     {
-      packages.caelestia =
-        inputs.shell.packages.${pkgs.stdenv.hostPlatform.system}.caelestia-shell.override
-          {
-            app2unit = pkgs.app2unit;
-            # material-symbols = pkgs.material-symbols.overrideAttrs (attrs: {
-            #   postInstall = ''
-            #     ln -s "$out/share/fonts/TTF/MaterialSymbolsRounded.ttf" "$out/share/fonts/TTF/MaterialSymbolsRounded[FILL,GRAD,opsz,wght].ttf"
-            #     ln -s "$out/share/fonts/TTF/MaterialSymbolsOutlined.ttf" "$out/share/fonts/TTF/MaterialSymbolsOutlined[FILL,GRAD,opsz,wght].ttf"
-            #     ln -s "$out/share/fonts/TTF/MaterialSymbolsSharp.ttf" "$out/share/fonts/TTF/MaterialSymbolsSharp[FILL,GRAD,opsz,wght].ttf"
-            #   '';
-            # });
-          };
+      packages.caelestia = inputs.shell.packages.${pkgs.stdenv.hostPlatform.system}.caelestia-shell;
     };
 
 }
