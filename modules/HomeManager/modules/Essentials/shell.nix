@@ -14,6 +14,7 @@
       programs.nushell = {
         enable = true;
         package = null;
+        loadSessionVariables = false;
         settings = {
           show_banner = false;
           edit_mode = "vi";

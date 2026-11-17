@@ -28,6 +28,12 @@
       hardware.graphics = {
         enable = true;
         enable32Bit = true;
+        extraPackages = [
+          pkgs.mesa.opencl
+        ];
+      };
+      environment.variables = {
+        RUSTICL_ENABLE = "radeonsi";
       };
       users.users.chimuelo = {
         isNormalUser = true;
@@ -84,9 +90,12 @@
         enable = true;
         nssmdns4 = true;
         openFirewall = true;
-        publish = {
-          enable = true;
-          userServices = true;
+        settings = {
+          publish = {
+            disable-publishing = false;
+            disable-user-service-publishing = false;
+            publish-addresses = true;
+          };
         };
       };
 

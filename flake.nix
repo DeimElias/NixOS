@@ -4,7 +4,7 @@
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
-    stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+    stable.url = "github:NixOS/nixpkgs/nixos-26.05";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     zen-browser = {
@@ -19,8 +19,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     shell = {
-      url = "github:caelestia-dots/shell/v1.5.2";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:caelestia-dots/shell/main";
     };
     rose-pine-hyprcursor = {
       url = "github:ndom91/rose-pine-hyprcursor";

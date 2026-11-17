@@ -21,17 +21,17 @@
             pkgs.python3Packages.pycryptodome
           ];
         }))
-        pkgs.libreoffice-qt6-fresh
+        pkgs.libreoffice-qt
         pkgs.brave
-        pkgs.qbz
+        pkgs.rustdesk-flutter
+        pkgs.davinci-resolve
       ];
+      programs.thunderbird.enable = true;
       services.pipewire = {
         enable = true;
         alsa.enable = true;
         alsa.support32Bit = true;
         pulse.enable = true;
-        # If you want to use JACK applications, uncomment this
-        jack.enable = true;
       };
 
       security.polkit.enable = true;
@@ -67,6 +67,8 @@
         mapPrefix = "/nix/store/;/run/current-system/;!/";
         exePrefix = "/nix/store/;/run/current-system/;!/";
       };
+
+      #For LibreOffice
       environment.unixODBCDrivers = with pkgs.unixodbcDrivers; [
         sqlite
         psql

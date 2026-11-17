@@ -13,7 +13,7 @@
         HandleLidSwitchDocked = "ignore";
       };
       hardware.logitech.wireless.enable = true;
-      hardware.logitech.wireless.enableGraphical = true;
+      programs.solaar.enable = true;
       services.auto-cpufreq = {
         enable = true;
         settings = {
@@ -53,6 +53,7 @@
       networking.firewall.allowedTCPPorts = [
         8083
         8069
+        9100
       ];
     };
 }
