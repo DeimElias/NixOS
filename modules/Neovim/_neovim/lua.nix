@@ -4,6 +4,23 @@
       vim.g.mapleader = " "       -- Need to set leader before lazy for correct keybindings
 
       vim.o.exrc = true
+      vim.o.cmdwinheight = math.floor(vim.o.lines / 2)
+      local group = vim.api.nvim_create_augroup("DynamicCmdWinHeight", { clear = true })
+
+      vim.api.nvim_create_autocmd("VimResized", {
+        group = group,
+        callback = function()
+          vim.o.cmdwinheight = math.floor(vim.o.lines / 2)
+        end,
+      })
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "help",
+        callback = function()
+          vim.keymap.set("n", "<Esc>", "<cmd>close<CR>", { buffer = true })
+        end,
+      })
+
 
       -- Save undo history
       vim.opt.undofile = true
