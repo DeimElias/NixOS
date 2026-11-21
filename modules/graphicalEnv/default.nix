@@ -25,6 +25,7 @@
         pkgs.brave
         pkgs.rustdesk-flutter
         pkgs.davinci-resolve
+        pkgs.photocraft
       ];
       programs.thunderbird.enable = true;
       services.pipewire = {
