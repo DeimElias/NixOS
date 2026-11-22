@@ -135,9 +135,7 @@
               {
                 _args = [
                   "hyprland.start"
-                  (lua ''function() hl.exec_cmd("${
-                    lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.caelestia
-                  }") end'')
+                  (lua ''function() hl.exec_cmd("caelestia-shell") end'')
                 ];
               }
               {
@@ -618,6 +616,7 @@
       };
       home.packages = [
         pkgs.hyprpicker
+        self.packages.${pkgs.stdenv.hostPlatform.system}.caelestia
       ];
       imports = [
         self.homeModules.hyprExtra
@@ -631,7 +630,7 @@
       ...
     }:
     {
-      packages.caelestia = inputs.shell.packages.${pkgs.stdenv.hostPlatform.system}.caelestia-shell;
+      packages.caelestia = inputs.shell.packages.${pkgs.stdenv.hostPlatform.system}.with-cli;
     };
 
 }
