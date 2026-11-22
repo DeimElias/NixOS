@@ -9,5 +9,5 @@ def main [dots_dir?: string] {
 	'nu' => (tmux send-keys -t 'Config:1.1' $'nvim ($config_file)' C-m)
 	'nvim' | 'vi' | 'vim' => (tmux send-keys -t 'Config:1.1' Escape Escape $':e ($config_file)' C-m)
 	}
-	tmux switch -t 'Config'
+	tmux switch-client -t 'Config'
 }

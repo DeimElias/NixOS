@@ -15,7 +15,7 @@
            if not ws.is_empty then return end
 
            if ws.name == "special:Extra" then
-             hl.exec_cmd("", { workspace = "special:Extra silent" })
+             hl.exec_cmd("rustdesk --connect 10.238.0.25", { workspace = "special:Extra silent" })
            end
         end)
       '';
