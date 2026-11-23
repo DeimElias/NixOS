@@ -9,13 +9,13 @@
         src = pkgs.fetchFromGitHub {
           owner = "sahaj-b";
           repo = "ghostty-cursor-shaders";
-          rev = "4faa83e4b9306750fc8de64b38c6f53c57862db8";
-          sha256 = "sha256-ruhEqXnWRCYdX5mRczpY3rj1DTdxyY3BoN9pdlDOKrE=";
+          rev = "9ad9158a93c0de0c045e1c6b27df37da698bc8af";
+          hash = "sha256-TnoQvptwjs6P5/JfJO1CR3yhCfCcaw5wvPr5oEhn4Ho=";
         };
         installPhase = ''
           	mkdir -p $out
-              		cp -r ./* $out/
-                    	'';
+            cp -r ./ghostty/* $out/
+        '';
       };
     in
 
@@ -25,7 +25,7 @@
         enable = true;
         settings = {
           theme = "TokyoNight Storm";
-          font-size = 13;
+          font-size = 16;
           gtk-tabs-location = "hidden";
           clipboard-read = "allow";
           clipboard-write = "allow";
@@ -34,7 +34,7 @@
           font-family = "FiraCode Nerd Font Mono";
           background-opacity = 0.78;
           confirm-close-surface = false;
-          custom-shader = "${cursor_shaders}/ripple_cursor.glsl";
+          custom-shader = "${cursor_shaders}/cursor_warp.glsl";
         };
       };
     };
