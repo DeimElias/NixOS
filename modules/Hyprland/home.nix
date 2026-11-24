@@ -90,6 +90,45 @@
               hl.animation({ leaf = "border", enabled = true, speed = 40, bezier = "standard" })
               hl.animation({ leaf = "borderangle", enabled = true, speed = 40, bezier = "standard", style = "loop"})
             '';
+          lid =
+            #lua
+            ''
+              local lidOpen = true
+              -- closedLid
+              local function closedLid()
+                lidOpen = false
+                if hl.get_monitor("eDP-1") ~= nil and #hl.get_monitors() > 1 then
+                  hl.monitor({ output = "eDP-1", disabled = true })
+                else
+                  hl.monitor({ output = "eDP-1", disabled = false })
+                  hl.dsp.dpms({ monitor = "eDP-1", action = "enabled" })
+                end
+              end
+
+
+              -- openLid
+              local function openLid()
+                lidOpen = true
+                hl.monitor({ output = "eDP-1", disabled = false })
+                hl.dsp.dpms({ monitor = "eDP-1", action = "disabled" })
+              end
+
+
+              local function clamshell()
+                if  not lidOpen and hl.get_monitor("eDP-1") == nil and #hl.get_monitors() == 0 then
+                  hl.monitor({ output = "eDP-1", disabled = false })
+                  hl.dsp.dpms({ monitor = "eDP-1", action = "enabled" })
+                end
+                if lidOpen and hl.get_monitor("eDP-1") == nil and #hl.get_monitors() == 0 then
+                  hl.monitor({ output = "eDP-1", disabled = false })
+                  hl.dsp.dpms({ monitor = "eDP-1", action = "disabled" })
+                end
+              end
+
+              hl.on("monitor.removed", clamshell)
+              hl.bind("switch:on:Lid Switch", closedLid, { locked = true })
+              hl.bind("switch:off:Lid Switch", openLid, { locked = true })
+            '';
         };
         settings =
           let
@@ -109,7 +148,7 @@
                 };
               };
               misc = {
-                force_default_wallpaper = 1;
+                disable_hyprland_logo = true;
               };
               cursor = {
                 inactive_timeout = 2;
@@ -132,12 +171,12 @@
               };
             };
             on = [
-              {
-                _args = [
-                  "hyprland.start"
-                  (lua ''function() hl.exec_cmd("caelestia-shell") end'')
-                ];
-              }
+              # {
+              #   _args = [
+              #     "hyprland.start"
+              #     (lua ''function() hl.exec_cmd("caelestia-shell") end'')
+              #   ];
+              # }
               {
                 _args = [
                   "window.title"
@@ -232,20 +271,6 @@
                     repeating = true;
                     locked = true;
                   }
-                ];
-              }
-              {
-                _args = [
-                  "switch:on:Lid Switch"
-                  (lua ''hl.dsp.exec_cmd("hyprctl dispatch dpms off eDP-1")'')
-                  { }
-                ];
-              }
-              {
-                _args = [
-                  "switch:off:Lid Switch"
-                  (lua ''hl.dsp.exec_cmd("hyprctl dispatch dpms on eDP-1")'')
-                  { locked = true; }
                 ];
               }
               {
@@ -616,21 +641,20 @@
       };
       home.packages = [
         pkgs.hyprpicker
-        self.packages.${pkgs.stdenv.hostPlatform.system}.caelestia
       ];
       imports = [
         self.homeModules.hyprExtra
+        inputs.shell.homeManagerModules.default
       ];
-    };
-  perSystem =
-    {
-      pkgs,
-      lib,
-      self',
-      ...
-    }:
-    {
-      packages.caelestia = inputs.shell.packages.${pkgs.stdenv.hostPlatform.system}.with-cli;
-    };
 
+      programs.caelestia = {
+        enable = true;
+        systemd = {
+          enable = true;
+        };
+        cli = {
+          enable = true; # Also add caelestia-cli to path
+        };
+      };
+    };
 }
